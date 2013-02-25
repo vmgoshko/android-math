@@ -1,0 +1,141 @@
+package by.bsu.mg.math.computing;
+
+import by.bsu.mg.math.exceptions.expressions.EmptyExpressionTreeException;
+import by.bsu.mg.math.parsing.lexemes.Lexeme;
+import by.bsu.mg.math.parsing.lexemes.LexemeType;
+import by.bsu.mg.math.parsing.expressions.Node;
+
+/**
+ * @author Vladimir Goshko vmgoshko@gmail.com
+ */
+public class Differentiator {
+
+    public Node differetiate(Node expr) throws EmptyExpressionTreeException {
+        Lexeme lexeme;
+
+        if(expr != null){
+            throw new EmptyExpressionTreeException();
+        }
+
+        switch (expr.getValue().getType()) {
+            case BINARY_PLUS:
+            case BINARY_MINUS:
+                return diffBinaryPlusMinus(expr);
+
+            case BINARY_MULTIPLY:
+                return diffMult(expr);
+
+            case BINARY_DIVIDE:
+                return diffDiv(expr);
+
+            case BINARY_POWER:
+                return diffPow(expr);
+
+            case FUNCTION:
+                return diffFunction(expr);
+
+            case NUMBER:
+                lexeme = expr.getValue();
+                return new Node(new Lexeme("0", lexeme.getLevel(), LexemeType.NUMBER));
+
+            case VARIABLE:
+                lexeme = expr.getValue();
+                return new Node(new Lexeme("1", lexeme.getLevel(), LexemeType.NUMBER));
+        }
+
+        return null;
+    }
+
+    private Node diffFunction(Node expr) {
+        Node root;
+        Node leftMultArg = null;
+        Node rightMultArg = null;
+
+        Lexeme funcLexeme = expr.getValue();
+        root = new Node(new Lexeme("*", 0, LexemeType.BINARY_MULTIPLY));
+
+
+        if ("sin".equals(funcLexeme.getValue())) {
+            leftMultArg = new Node(new Lexeme("cos", 0, LexemeType.FUNCTION));
+            leftMultArg.setChild(0, expr.getChild(0));
+            rightMultArg = differetiate(expr.getChild(0));
+        }
+
+        if ("cos".equals(funcLexeme.getValue())) {
+            leftMultArg = new Node(new Lexeme("-", 0, LexemeType.UNARY_MINUS));
+            Node sin = new Node(new Lexeme("sin", 0, LexemeType.FUNCTION));
+            leftMultArg.setChild(0, expr.getChild(0));
+
+            rightMultArg = differetiate(expr.getChild(0));
+        }
+
+        //TODO: add other function differentiations here
+
+        root.setChild(0, leftMultArg);
+        root.setChild(1, rightMultArg);
+
+        return root;
+    }
+
+    private Node diffPow(Node expr) {
+
+        //TODO: add power differentiation here
+        return null;
+    }
+
+    private Node diffDiv(Node expr) {
+        Node root = new Node(expr.getValue());
+
+        Node pow = new Node(new Lexeme("^", 0, LexemeType.BINARY_POWER));
+        Node rightPow = new Node(new Lexeme("2", 0, LexemeType.NUMBER));
+        Node leftPow = differetiate(expr.getChild(1));
+        pow.setChild(0, leftPow);
+        pow.setChild(1, rightPow);
+
+        Node minus = new Node(new Lexeme("-", 0, LexemeType.BINARY_MINUS));
+        Node minusLeftMult = new Node(new Lexeme("*", 0, LexemeType.BINARY_MULTIPLY));
+        Node minusRightMult = new Node(new Lexeme("*", 0, LexemeType.BINARY_MULTIPLY));
+
+        Node leftMultLeft = differetiate(expr.getChild(0));
+        Node leftMultRight = expr.getChild(1);
+
+        Node rightMultRight = expr.getChild(0);
+        Node rightMultLeft = differetiate(expr.getChild(1));
+
+        minusLeftMult.setChild(0, leftMultLeft);
+        minusLeftMult.setChild(1, leftMultRight);
+
+        minusRightMult.setChild(0, rightMultLeft);
+        minusRightMult.setChild(1, rightMultRight);
+
+        root.setChild(0, minus);
+        root.setChild(1, pow);
+
+        return root;
+    }
+
+    private Node diffMult(Node expr) {
+        Node root = new Node(new Lexeme("+", expr.getValue().getLevel(), LexemeType.BINARY_PLUS));
+        Node leftMult = new Node(new Lexeme("*", expr.getValue().getLevel(), LexemeType.BINARY_MULTIPLY));
+        Node rightMult = new Node(new Lexeme("*", expr.getValue().getLevel(), LexemeType.BINARY_MULTIPLY));
+
+        leftMult.setChild(0, differetiate(expr.getChild(0)));
+        leftMult.setChild(1, expr.getChild(1));
+
+        rightMult.setChild(0, expr.getChild(0));
+        rightMult.setChild(1, differetiate(expr.getChild(1)));
+
+        root.setChild(0, leftMult);
+        root.setChild(1, rightMult);
+
+        return root;
+    }
+
+    private Node diffBinaryPlusMinus(Node expr) {
+        Node root = new Node();
+        root.setValue(expr.getValue());
+        root.setChild(0, differetiate(expr.getChild(0)));
+        root.setChild(1, differetiate(expr.getChild(1)));
+        return root;
+    }
+}
