@@ -16,7 +16,7 @@ import by.bsu.mg.math.utils.Point2d;
 /**
  * @author Vladimir Goshko vmgoshko@gmail.com
  */
-public class GraphPlaneRenderer implements GLSurfaceView.Renderer {
+public class GraphPlaneRenderer implements Renderer {
 
     private final List<IPoint> points;
     private final int DIMENSIONS = 3;

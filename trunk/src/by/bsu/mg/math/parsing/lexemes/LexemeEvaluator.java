@@ -149,7 +149,7 @@ public class LexemeEvaluator {
 
     private static boolean isConstant(String value) {
 
-        int valueIndex = Arrays.binarySearch(constants, value, new LexemeEvaluator.StringComparator());
+        int valueIndex = Arrays.binarySearch(constants, value, new StringComparator());
 
         return valueIndex >= 0;
     }

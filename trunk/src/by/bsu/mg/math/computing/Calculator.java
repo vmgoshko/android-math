@@ -39,7 +39,7 @@ public class Calculator {
      * Use this method to calculate value of expression for each x value from [xMin, xMax] range.
      * @see Node
      * @see Point2d
-     * @see List
+     * @see java.util.List
      *
      * @param root              : expression to calculate
      * @param xMin              : start x

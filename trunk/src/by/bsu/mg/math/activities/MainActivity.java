@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
-import by.bsu.mg.math.R;
 import by.bsu.mg.math.views.GLGraphPlane;
-import by.bsu.mg.math.views.KeysPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
