@@ -6,10 +6,9 @@ import by.bsu.mg.math.exceptions.IllegalArgumentsAmoutException;
  * @author Vladimir Goshko vmgoshko@gmail.com
  */
 public class MathExtended {
-    private static String[] functionOperations = {"sin", "cos", "tg", "ctg", "arsin", "arcos",
-                                                  "artg", "arctg", "ln", "log10", "log2", "logd",
-                                                  "todeg", "torad", "abs", "floor", "ceil", "sinh",
-            "cosh", "max", "min"};
+
+    private static double accuracy = 10;
+
     public static double sin(double[] args) throws IllegalArgumentsAmoutException {
         checkArgs("sin", args,1);
         return Math.sin(args[0]);
@@ -32,7 +31,7 @@ public class MathExtended {
 
     public static double arsin(double[] args) throws IllegalArgumentsAmoutException {
         checkArgs("arsin", args,1);
-        return Math.asin(args[0]);
+        return  Math.asin(args[0]);
     }
 
     public static double arcos(double[] args) throws IllegalArgumentsAmoutException {
@@ -67,7 +66,7 @@ public class MathExtended {
 
     public static double logd(double[] args) throws IllegalArgumentsAmoutException {
         checkArgs("logd", args,2);
-        return Math.log(args[0])/Math.log(args[1]);
+        return Math.log(args[1])/Math.log(args[0]);
     }
 
     public static double todeg(double[] args) throws IllegalArgumentsAmoutException {
@@ -95,16 +94,30 @@ public class MathExtended {
         return Math.ceil(args[0]);
     }
 
-    public static double sinh(double[] args) throws IllegalArgumentsAmoutException {
-        checkArgs("sinh",args,1);
+    public static double sh(double[] args) throws IllegalArgumentsAmoutException {
+        checkArgs("sh",args,1);
         return Math.sinh(args[0]);
     }
 
-    public static double cosh(double[] args) throws IllegalArgumentsAmoutException {
-        checkArgs("cosh",args,1);
+    public static double ch(double[] args) throws IllegalArgumentsAmoutException {
+        checkArgs("ch",args,1);
         return Math.cosh(args[0]);
     }
 
+    public static double th(double[] args) throws IllegalArgumentsAmoutException {
+        checkArgs("th",args,1);
+        return Math.tanh(args[0]);
+    }
+
+    public static double cth(double[] args) throws IllegalArgumentsAmoutException {
+        checkArgs("cth",args,1);
+        return 1 / Math.tanh(args[0]);
+    }
+
+    public static double sign(double[] args) throws IllegalArgumentsAmoutException {
+        checkArgs("sign",args,1);
+        return Math.signum(args[0]);
+    }
 
     /**
      * Find minimum element in array
@@ -112,7 +125,7 @@ public class MathExtended {
      * @return minimum element
      */
     public static double findMin(double[] array){
-        double min = 0;
+        double min = array[0];
 
         for (double anArray : array) {
             if (anArray < min) {
@@ -129,7 +142,7 @@ public class MathExtended {
      * @return maximum element
      */
     public static double findMax(double[] array){
-        double max = 0;
+        double max = array[0];
 
         for (double anArray : array) {
             if (anArray > max) {
@@ -140,11 +153,18 @@ public class MathExtended {
         return max;
     }
 
+    public static double round(double d){
+        int precise = (int) Math.pow(10,accuracy);
+        d = d * precise;
+        int i = (int) Math.round(d);
+        return (double) i / precise;
+    }
 
     private static void checkArgs(String operation, double[] args, int argsAmount) throws IllegalArgumentsAmoutException {
         if(args.length != argsAmount){
             throw new IllegalArgumentsAmoutException(operation, argsAmount);
         }
     }
+
 
 }

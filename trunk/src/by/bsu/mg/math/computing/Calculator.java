@@ -32,7 +32,7 @@ public class Calculator {
      * @return double value     : constant expression value
      */
     public double calculate(Node root){
-        return calculateExpression(root, NO_ARG);
+        return calculate(root, NO_ARG);
     }
 
     /**
@@ -50,7 +50,7 @@ public class Calculator {
         float xVal = xMin;
 
         while (xVal <= xMax) {
-            points.add(new Point2d(xVal, calculateExpression(root, xVal)));
+            points.add(new Point2d(xVal, calculate(root, xVal)));
             xVal += (float) 1 / 10;
         }
         return points;
@@ -64,28 +64,30 @@ public class Calculator {
      * @param xVal              : x value
      * @return                  : expression value for xVal
      */
-    private double calculateExpression(Node root, double xVal) {
+    public double calculate(Node root, double xVal) {
+        double result = 0;
+
         if (root.getChildren() == null) {
             if (root.getValue().getType() == LexemeType.VARIABLE) {
-                return xVal;
+                result = xVal;
             }
 
             if(root.getValue().getType() == LexemeType.NUMBER){
-                return Double.parseDouble(root.getValue().getValue());
+                result = Double.parseDouble(root.getValue().getValue());
             }
         } else {
             List<Node> children = root.getChildren();
             double[] childrenValues = new double[children.size()];
 
             for (int i = 0; i < children.size(); i++) {
-                childrenValues[i] = calculateExpression(children.get(i), xVal);
+                childrenValues[i] = calculate(children.get(i), xVal);
             }
 
-            return calculateOperation(root.getValue(),childrenValues);
+            result = calculateOperation(root.getValue(),childrenValues);
         }
 
-        //!!!!!!!!!!!!!EXCEPTION!!!!!!!!!
-        return 0;
+        return result;
+        //return MathExtended.round(result);
     }
 
     /**
@@ -179,16 +181,20 @@ public class Calculator {
                 return MathExtended.log2(args);
             }
 
-            if("sinh".equals(name)){
-                return MathExtended.sinh(args);
+            if("sh".equals(name)){
+                return MathExtended.sh(args);
             }
 
-            if("sinh".equals(name)){
-                return MathExtended.sinh(args);
+            if("ch".equals(name)){
+                return MathExtended.ch(args);
             }
 
-            if("cosh".equals(name)){
-                return MathExtended.cosh(args);
+            if("th".equals(name)){
+                return MathExtended.th(args);
+            }
+
+            if("cth".equals(name)){
+                return MathExtended.cth(args);
             }
 
             if("todeg".equals(name)){

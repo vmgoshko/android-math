@@ -93,7 +93,7 @@ public class LexemeParser {
      */
     private String getWord(String expr, int start) {
         StringBuilder word = new StringBuilder();
-        while (start < expr.length() && isAlphabet(expr, start)) {
+        while (start < expr.length() && isAlphaNum(expr, start)) {
             word.append(expr.charAt(start));
             start++;
         }
@@ -123,7 +123,12 @@ public class LexemeParser {
      */
     private boolean isAlphabet(String expr, int position) {
         char c = expr.charAt(position);
-        return isCharBetween(c, 'A', 'z');
+        return isCharBetween(c, 'A', 'Z') || isCharBetween(c, 'a', 'z') || c == 'π';
+    }
+
+    private boolean isAlphaNum(String expr, int position) {
+        char c = expr.charAt(position);
+        return isAlphabet(expr, position) || isNumber(expr, position);
     }
 
     /**
@@ -136,7 +141,7 @@ public class LexemeParser {
      */
     private boolean isOneSymbolLexeme(String expr, int position) {
         char c = expr.charAt(position);
-        return isCharExist(c, '(', ')', '+', '-', '*', '/', '!', '^', ',');
+        return isCharExist(c, '(', ')', '+', '-', '*', '/', '!', '^', ',', '%', '∞');
     }
 
     /**

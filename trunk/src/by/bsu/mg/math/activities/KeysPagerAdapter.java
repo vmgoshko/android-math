@@ -13,29 +13,33 @@ public class KeysPagerAdapter extends PagerAdapter {
 
     List<View> pages = null;
 
-    public KeysPagerAdapter(List<View> pages){
+    public KeysPagerAdapter(List<View> pages) {
         this.pages = pages;
     }
 
     @Override
-    public Object instantiateItem(View collection, int position){
+    public Object instantiateItem(View collection, int position) {
         View v = pages.get(position);
         ((ViewPager) collection).addView(v, 0);
         return v;
     }
 
     @Override
-    public void destroyItem(View collection, int position, Object view){
+    public void destroyItem(View collection, int position, Object view) {
         ((ViewPager) collection).removeView((View) view);
     }
 
     @Override
-    public int getCount(){
+    public int getCount() {
         return pages.size();
     }
 
     @Override
-    public boolean isViewFromObject(View view, Object object){
+    public boolean isViewFromObject(View view, Object object) {
         return view.equals(object);
+    }
+
+    public List<View> getPages() {
+        return pages;
     }
 }

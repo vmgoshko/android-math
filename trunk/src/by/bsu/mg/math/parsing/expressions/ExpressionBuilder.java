@@ -29,7 +29,7 @@ public class ExpressionBuilder {
         LexemeEvaluator.evaluateLexemeList(lexemes);
         LexemeListValidator validator = new LexemeListValidator(lexemes);
 
-        if(!validator.validate()){
+        if(!validator.validate()) {
             errors.addAll(validator.getErrors());
             throw new CantParseException(expression, errors);
         }
@@ -37,8 +37,8 @@ public class ExpressionBuilder {
         maxLevel = LexemeEvaluator.getMaxLevel();
         Node exprTreeRoot = findRoot(0, 0, lexemes.size());
 
-        ExpressionOptimizer exprOptimizer = new ExpressionOptimizer();
-        exprOptimizer.optimize(exprTreeRoot);
+    //    ExpressionOptimizer exprOptimizer = new ExpressionOptimizer();
+    //  exprOptimizer.optimize(exprTreeRoot);
 
         return exprTreeRoot;
     }
@@ -61,7 +61,7 @@ public class ExpressionBuilder {
     private Node findPriorityLeveledRoot(int priority, int level, int begin, int end) {
         Node root;
 
-        for (int i = begin; i < end; i++) {
+        for (int i = end-1; i >= begin; i--) {
             Lexeme lexeme = lexemes.get(i);
             if (lexeme.getPriority() == priority && lexeme.getLevel() == level) {
                 if (LexemeEvaluator.isUnaryMinus(lexeme)) {

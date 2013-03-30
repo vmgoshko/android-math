@@ -6,10 +6,11 @@ public enum LexemeType {
     CLOSE_BRACKET(-2),
     SEPARATOR(-1),
 
+
     BINARY_PLUS(0),
     BINARY_MINUS(1),
-    BINARY_DIVIDE(2),
-    BINARY_MULTIPLY(3),
+    BINARY_MULTIPLY(2),
+    BINARY_DIVIDE(3),
     BINARY_MOD(4),
     BINARY_POWER(5),
 
@@ -23,7 +24,6 @@ public enum LexemeType {
 
     private static int maxPriority = 10;
     private int priority;
-
 
     LexemeType(int priority){
         this.priority = priority;

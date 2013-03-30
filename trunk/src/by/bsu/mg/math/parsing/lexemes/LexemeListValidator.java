@@ -42,6 +42,7 @@ public class LexemeListValidator {
 
             case OPEN_BRACKET:
                 valideNeighbour = (rightType == LexemeType.OPEN_BRACKET) ||
+                        (rightType == LexemeType.FUNCTION) ||
                         (rightType == LexemeType.UNARY_MINUS) ||
                         (rightType == LexemeType.NUMBER) ||
                         (rightType == LexemeType.VARIABLE);
@@ -122,7 +123,7 @@ public class LexemeListValidator {
             case NUMBER:
             case VARIABLE:
                 valideNeighbour = (rightType == LexemeType.CLOSE_BRACKET) ||
-                        //   (rightType == LexemeType.SEPARATOR) ||
+                        (rightType == LexemeType.SEPARATOR) ||
                         (rightType == LexemeType.BINARY_PLUS) ||
                         (rightType == LexemeType.BINARY_MINUS) ||
                         (rightType == LexemeType.BINARY_MULTIPLY) ||

@@ -1,5 +1,6 @@
 package by.bsu.mg.math.parsing.lexemes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -36,19 +37,23 @@ public class LexemeEvaluator {
 
     private static String[] functionOperations = {"sin", "cos", "tg", "ctg", "arsin", "arcos",
                                                   "artg", "arctg", "ln", "lg", "log2", "logd",
-                                                  "todeg", "torad", "abs", "floor", "ceil", "sinh",
-                                                  "cosh", "max", "min"};
+                                                  "todeg", "torad", "abs", "floor", "ceil","sign",
+                                                  "sh", "ch", "th", "cth", "max", "min"};
 
     private static String[] variables = {"x", "y", "z", "t"};
-    private static String[] constants = {"pi", "e"};
+    private static String[] constants = {"π", "e", "∞"};
     private static String[] unaryOperations = {"-", "!"};
     private static String[] separators = {","};
 
-    private static int bracketLevel = 0;
+    private static int bracketLevel;
     private static int maxLevel;
 
     private static List<Lexeme> lexemes;
 
+    static {
+        sortLexemeArrays();
+        bracketLevel = 0;
+    }
     private static class StringComparator implements Comparator<String> {
 
         @Override
@@ -61,7 +66,6 @@ public class LexemeEvaluator {
     public static List<Lexeme> evaluateLexemeList(List<Lexeme> lexemeList) {
         lexemes = lexemeList;
 
-        sortLexemeArrays();
         for (int i = 0; i < lexemes.size(); i++) {
             LexemeType lexemeType = evaluateLexeme(i);
             lexemes.get(i).setType(lexemeType);
@@ -87,6 +91,18 @@ public class LexemeEvaluator {
 
     public static int getMaxLevel() {
         return maxLevel;
+    }
+
+    public static LexemeType evaluateLexeme(Lexeme lexeme){
+         //TODO: optimize one lexeme evaluation
+        lexemes = new ArrayList<Lexeme>();
+        lexemes.add(lexeme);
+
+        LexemeType type = evaluateLexeme(0);
+
+        lexemes.clear();
+        lexemes = null;
+        return type;
     }
 
     private static LexemeType evaluateLexeme(int index) {
@@ -127,7 +143,7 @@ public class LexemeEvaluator {
             return result;
         }
 
-        if(isConstant(lexeme.getValue())){
+        if (isConstant(lexeme.getValue())){
             result = LexemeType.NUMBER;
             replaceConstant(lexeme);
             return result;
@@ -136,13 +152,18 @@ public class LexemeEvaluator {
     }
 
     private static void replaceConstant(Lexeme lexeme) {
-        if("pi".equals(lexeme.getValue())){
-            lexeme.setValue(String.valueOf(3.141592653589793238));
+        if("π".equals(lexeme.getValue())){
+            lexeme.setValue(String.valueOf(Math.PI));
+            return;
+        }
+
+        if("∞".equals(lexeme.getValue())){
+            lexeme.setValue(String.valueOf(Double.POSITIVE_INFINITY));
             return;
         }
 
         if("e".equals(lexeme.getValue())){
-            lexeme.setValue(String.valueOf(2.718281828459045235));
+            lexeme.setValue(String.valueOf(Math.E));
             return;
         }
     }
@@ -151,7 +172,7 @@ public class LexemeEvaluator {
 
         int valueIndex = Arrays.binarySearch(constants, value, new StringComparator());
 
-        return valueIndex >= 0;
+        return (valueIndex >= 0);
     }
 
     private static LexemeType getFunction(int index) {
@@ -174,7 +195,7 @@ public class LexemeEvaluator {
         }
 
         if ("-".equals(lexeme.getValue())) {
-            return defineMinusSign(index);
+            return defineMinusType(index);
         }
 
         if ("*".equals(lexeme.getValue())) {
@@ -222,7 +243,7 @@ public class LexemeEvaluator {
         return LexemeType.UNDEFINED;
     }
 
-    private static LexemeType defineMinusSign(int index) {
+    private static LexemeType defineMinusType(int index) {
         if (index == 0) {
             return LexemeType.UNARY_MINUS;
         }
@@ -265,6 +286,7 @@ public class LexemeEvaluator {
     public static boolean isBinary(Lexeme lexeme) {
         LexemeType type = lexeme.getType();
         return (type == LexemeType.BINARY_DIVIDE) ||
+               (type == LexemeType.BINARY_MOD) ||
                 (type == LexemeType.BINARY_PLUS) ||
                 (type == LexemeType.BINARY_MINUS) ||
                 (type == LexemeType.BINARY_MULTIPLY) ||
