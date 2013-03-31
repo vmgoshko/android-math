@@ -76,7 +76,7 @@ public class Calculator {
         } else {
             List<Node> children = root.getChildren();
 
-            switch (root.getChildrenCount()) {
+            switch (children.size()) {
                 case 1:
                     result = calculateOneArgOperation(((StringNode) root).getValue(),
                             type,
