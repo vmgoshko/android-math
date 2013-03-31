@@ -5,11 +5,9 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import by.bsu.mg.math.computing.Algorithms.DefiniteIntegrator;
-import by.bsu.mg.math.computing.Algorithms.SimpsonMethod;
 import by.bsu.mg.math.computing.Calculator;
 import by.bsu.mg.math.parsing.expressions.ExpressionBuilder;
-import by.bsu.mg.math.parsing.expressions.Node;
+import by.bsu.mg.math.parsing.expressions.nodes.Node;
 import by.bsu.mg.math.parsing.lexemes.Lexeme;
 import by.bsu.mg.math.parsing.lexemes.LexemeType;
 

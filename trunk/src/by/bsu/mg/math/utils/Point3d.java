@@ -52,19 +52,19 @@ public class Point3d implements IPoint{
         z = coords[2];
     }
 
-    public double[] to2dArray(){
-        double[] pointArr = new double[2];
-        pointArr[0] = x;
-        pointArr[1] = y;
+    public float[] to2dArray(){
+        float[] pointArr = new float[2];
+        pointArr[0] = (float) x;
+        pointArr[1] = (float) y;
 
         return pointArr;
     }
 
-    public double[] to3dArray(){
-        double[] pointArr = new double[3];
-        pointArr[0] = x;
-        pointArr[1] = y;
-        pointArr[2] = z;
+    public float[] to3dArray(){
+        float[] pointArr = new float[3];
+        pointArr[0] = (float) x;
+        pointArr[1] = (float) y;
+        pointArr[2] = (float) z;
 
         return pointArr;
     }

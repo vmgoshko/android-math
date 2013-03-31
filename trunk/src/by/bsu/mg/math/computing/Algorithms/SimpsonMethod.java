@@ -1,7 +1,7 @@
 package by.bsu.mg.math.computing.Algorithms;
 
 import by.bsu.mg.math.computing.Calculator;
-import by.bsu.mg.math.parsing.expressions.Node;
+import by.bsu.mg.math.parsing.expressions.nodes.Node;
 
 import java.util.ArrayList;
 import java.util.List;

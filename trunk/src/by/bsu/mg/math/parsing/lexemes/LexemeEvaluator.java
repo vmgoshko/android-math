@@ -275,16 +275,15 @@ public class LexemeEvaluator {
         return true;
     }
 
-    public static boolean isUnaryMinus(Lexeme lexeme) {
-        return lexeme.getType() == LexemeType.UNARY_MINUS;
+    public static boolean isUnaryMinus(LexemeType type) {
+        return type == LexemeType.UNARY_MINUS;
     }
 
     public static boolean isFactorial(Lexeme lexeme) {
         return lexeme.getType() == LexemeType.UNARY_FACTORIAL;
     }
 
-    public static boolean isBinary(Lexeme lexeme) {
-        LexemeType type = lexeme.getType();
+    public static boolean isBinary(LexemeType type) {
         return (type == LexemeType.BINARY_DIVIDE) ||
                (type == LexemeType.BINARY_MOD) ||
                 (type == LexemeType.BINARY_PLUS) ||
@@ -293,8 +292,8 @@ public class LexemeEvaluator {
                 (type == LexemeType.BINARY_POWER);
     }
 
-    public static boolean isFunction(Lexeme lexeme) {
-        return lexeme.getType() == LexemeType.FUNCTION;
+    public static boolean isFunction(LexemeType type) {
+        return type == LexemeType.FUNCTION;
     }
 
     public static boolean isSimpleArgument(Lexeme lexeme) {

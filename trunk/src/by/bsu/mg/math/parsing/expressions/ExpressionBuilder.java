@@ -1,6 +1,9 @@
 package by.bsu.mg.math.parsing.expressions;
 
 import by.bsu.mg.math.exceptions.parsing.CantParseException;
+import by.bsu.mg.math.parsing.expressions.nodes.DoubleNode;
+import by.bsu.mg.math.parsing.expressions.nodes.Node;
+import by.bsu.mg.math.parsing.expressions.nodes.StringNode;
 import by.bsu.mg.math.parsing.lexemes.*;
 
 import java.util.ArrayDeque;
@@ -16,7 +19,7 @@ public class ExpressionBuilder {
 
     /**
      * Parse string expression and build it's tree
-     * @see Node
+     * @see by.bsu.mg.math.parsing.expressions.nodes.Node
      * @see CantParseException
      * @param expression    : expression to parse
      * @return Node root    : root of expression tree
@@ -37,8 +40,8 @@ public class ExpressionBuilder {
         maxLevel = LexemeEvaluator.getMaxLevel();
         Node exprTreeRoot = findRoot(0, 0, lexemes.size());
 
-    //    ExpressionOptimizer exprOptimizer = new ExpressionOptimizer();
-    //  exprOptimizer.optimize(exprTreeRoot);
+     //   ExpressionOptimizer exprOptimizer = new ExpressionOptimizer();
+     //   exprOptimizer.optimize(exprTreeRoot);
 
         return exprTreeRoot;
     }
@@ -64,37 +67,42 @@ public class ExpressionBuilder {
         for (int i = end-1; i >= begin; i--) {
             Lexeme lexeme = lexemes.get(i);
             if (lexeme.getPriority() == priority && lexeme.getLevel() == level) {
-                if (LexemeEvaluator.isUnaryMinus(lexeme)) {
-                    root = new Node();
+                if (LexemeEvaluator.isUnaryMinus(lexeme.getType())) {
+                    root = new StringNode();
                     root.setValue(lexeme);
                     root.setChild(0, findRoot(level, i + 1, end));
                     return root;
                 }
 
                 if (LexemeEvaluator.isFactorial(lexeme)) {
-                    root = new Node();
+                    root = new StringNode();
                     root.setValue(lexeme);
                     root.setChild(0, findRoot(level, begin, i));
                     return root;
                 }
 
-                if (LexemeEvaluator.isBinary(lexeme)) {
-                    root = new Node();
+                if (LexemeEvaluator.isBinary(lexeme.getType())) {
+                    root = new StringNode();
                     root.setValue(lexeme);
                     root.setChild(0, findRoot(level, begin, i));
                     root.setChild(1, findRoot(level, i + 1, end));
                     return root;
                 }
 
-                if (LexemeEvaluator.isFunction(lexeme)) {
-                    root = new Node();
+                if (LexemeEvaluator.isFunction(lexeme.getType())) {
+                    root = new StringNode();
                     root.setValue(lexeme);
                     root.setChildren(getFunctionChildrenList(level + 1, i + 1, findCloseBracket(i + 1)));
                     return root;
                 }
 
                 if (LexemeEvaluator.isSimpleArgument(lexeme)) {
-                    root = new Node();
+                    if(lexeme.getType() == LexemeType.VARIABLE){
+                        root = new StringNode();
+                    } else {
+                        root = new DoubleNode();
+                    }
+
                     root.setValue(lexeme);
                     return root;
                 }

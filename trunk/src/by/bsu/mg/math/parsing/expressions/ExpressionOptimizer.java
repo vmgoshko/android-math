@@ -1,6 +1,7 @@
 package by.bsu.mg.math.parsing.expressions;
 
 import by.bsu.mg.math.computing.Calculator;
+import by.bsu.mg.math.parsing.expressions.nodes.Node;
 import by.bsu.mg.math.parsing.lexemes.Lexeme;
 import by.bsu.mg.math.parsing.lexemes.LexemeType;
 
@@ -18,7 +19,7 @@ public class ExpressionOptimizer {
 
     private boolean tryConstant(Node root) {
         if (root.getChildren() == null) {
-            return root.getValue().getType() == LexemeType.NUMBER;
+            return root.getType() == LexemeType.NUMBER;
         }
 
         boolean isConstBranches = true;
@@ -30,7 +31,7 @@ public class ExpressionOptimizer {
             double subTreeValue = calc.calculate(root);
             root.setChildren(null);
             root.setValue(
-                    new Lexeme(Double.toString(subTreeValue), root.getValue().getLevel(), LexemeType.NUMBER)
+                    new Lexeme(Double.toString(subTreeValue), root.getLevel(), LexemeType.NUMBER)
             );
         }
 

@@ -1,10 +1,12 @@
 package by.bsu.mg.math.computing;
 
-import by.bsu.mg.math.exceptions.IllegalArgumentsAmoutException;
+import by.bsu.mg.math.exceptions.IllegalArgumentsAmountException;
+import by.bsu.mg.math.parsing.expressions.nodes.DoubleNode;
+import by.bsu.mg.math.parsing.expressions.nodes.StringNode;
 import by.bsu.mg.math.parsing.lexemes.IError;
 import by.bsu.mg.math.parsing.lexemes.Lexeme;
 import by.bsu.mg.math.parsing.lexemes.LexemeType;
-import by.bsu.mg.math.parsing.expressions.Node;
+import by.bsu.mg.math.parsing.expressions.nodes.Node;
 import by.bsu.mg.math.parsing.lexemes.LexemeEvaluator;
 import by.bsu.mg.math.utils.IPoint;
 import by.bsu.mg.math.utils.Point2d;
@@ -68,14 +70,15 @@ public class Calculator {
         double result = 0;
 
         if (root.getChildren() == null) {
-            if (root.getValue().getType() == LexemeType.VARIABLE) {
+            if (root.getType() == LexemeType.VARIABLE) {
                 result = xVal;
             }
 
-            if(root.getValue().getType() == LexemeType.NUMBER){
-                result = Double.parseDouble(root.getValue().getValue());
+            if(root.getType() == LexemeType.NUMBER){
+                result = ((DoubleNode) root).getValue();
             }
         } else {
+
             List<Node> children = root.getChildren();
             double[] childrenValues = new double[children.size()];
 
@@ -83,7 +86,7 @@ public class Calculator {
                 childrenValues[i] = calculate(children.get(i), xVal);
             }
 
-            result = calculateOperation(root.getValue(),childrenValues);
+            result = calculateOperation(((StringNode) root).getValue(), root.getType(), childrenValues);
         }
 
         return result;
@@ -95,21 +98,21 @@ public class Calculator {
      * @see LexemeType
      * @see Node
      *
-     * @param operation             : operation lexeme
+     * TODO: doc
      * @param args                  : operation args
      * @return operation(args)
      */
-    private double calculateOperation(Lexeme operation, double[] args) {
-        if(LexemeEvaluator.isBinary(operation)){
-            return calculateBinary(operation,args);
+    private double calculateOperation(String name, LexemeType type, double[] args) {
+        if(LexemeEvaluator.isBinary(type)){
+            return calculateBinary(type ,args);
         }
 
-        if(LexemeEvaluator.isUnaryMinus(operation)){
+        if(LexemeEvaluator.isUnaryMinus(type)){
             return -args[0];
         }
 
-        if(LexemeEvaluator.isFunction(operation)){
-            return calculateFunction(operation, args);
+        if(LexemeEvaluator.isFunction(type)){
+            return calculateFunction(name, args);
         }
 
         return 0;
@@ -121,12 +124,11 @@ public class Calculator {
      * @see LexemeType
      * @see Node
      *
-     * @param operation             : function lexeme
+     * @param name                  : function name
      * @param args                  : function args
      * @return function(args[0],args[1],...)
      */
-    private double calculateFunction(Lexeme operation, double[] args) {
-        String name = operation.getValue();
+    private double calculateFunction(String name, double[] args) {
         try{
             if("abs".equals(name)){
                 return MathExtended.abs(args);
@@ -220,7 +222,7 @@ public class Calculator {
             if("max".equals(name)){
                return MathExtended.findMax(args);
             }
-        } catch (IllegalArgumentsAmoutException e){
+        } catch (IllegalArgumentsAmountException e){
             //
         }
 
@@ -232,33 +234,33 @@ public class Calculator {
      * @see LexemeType
      * @see Node
      *
-     * @param operation             : binary operation lexeme
+     * @param type                  : binary operation type
      * @param args                  : binary operation args
      * @return binary_operation(args[0],args[1],...)
      */
-    private double calculateBinary(Lexeme operation, double[] args) {
+    private double calculateBinary(LexemeType type, double[] args) {
 
-        if (operation.getType() == LexemeType.BINARY_PLUS){
+        if (type == LexemeType.BINARY_PLUS){
             return args[0] + args[1];
         }
 
-        if (operation.getType() == LexemeType.BINARY_MINUS){
+        if (type == LexemeType.BINARY_MINUS){
             return args[0] - args[1];
         }
 
-        if (operation.getType() == LexemeType.BINARY_MULTIPLY){
+        if (type == LexemeType.BINARY_MULTIPLY){
             return args[0] * args[1];
         }
 
-        if (operation.getType() == LexemeType.BINARY_DIVIDE){
+        if (type == LexemeType.BINARY_DIVIDE){
             return args[0] / args[1];
         }
 
-        if (operation.getType() == LexemeType.BINARY_POWER){
+        if (type == LexemeType.BINARY_POWER){
             return Math.pow(args[0],args[1]);
         }
 
-        if (operation.getType() == LexemeType.BINARY_MOD){
+        if (type == LexemeType.BINARY_MOD){
             return args[0] % args[1];
         }
 

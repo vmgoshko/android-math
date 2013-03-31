@@ -21,4 +21,6 @@
     <string name="str_percent">%</string>
 
     <string name="str_equal">=</string>
+    <string name="graph2dImpl">Graph 2D implicit</string>
+    <string name="compAct">Computing</string>
 </resources>

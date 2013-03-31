@@ -7,7 +7,7 @@ public interface IPoint {
     public void setCoords(double[] coords);
 
     //TODO: projection
-    public double[] to2dArray();
+    public float[] to2dArray();
     //TODO: projection
-    public double[] to3dArray();
+    public float[] to3dArray();
 }
