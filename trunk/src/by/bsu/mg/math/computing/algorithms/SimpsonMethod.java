@@ -1,4 +1,4 @@
-package by.bsu.mg.math.computing.Algorithms;
+package by.bsu.mg.math.computing.algorithms;
 
 import by.bsu.mg.math.computing.Calculator;
 import by.bsu.mg.math.parsing.expressions.nodes.Node;

@@ -1,4 +1,4 @@
-package by.bsu.mg.math.computing.Algorithms;
+package by.bsu.mg.math.computing.algorithms;
 
 /**
  * @author Vladimir Goshko vmgoshko@gmail.com
