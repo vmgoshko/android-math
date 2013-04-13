@@ -2,8 +2,7 @@ package by.bsu.mg.math.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
-import by.bsu.mg.math.computing.Calculator;
-import by.bsu.mg.math.computing.calculators.OneVarCalculator;
+import by.bsu.mg.math.computing.calculators.XVarCalculator;
 import by.bsu.mg.math.debug.Timer;
 import by.bsu.mg.math.parsing.expressions.ExpressionBuilder;
 import by.bsu.mg.math.parsing.expressions.nodes.Node;
@@ -23,7 +22,7 @@ public class Graphing extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         ExpressionBuilder expressionBuilder = new ExpressionBuilder();
         Node expression = expressionBuilder.buildTree("sin(x)");
-        OneVarCalculator calc = new OneVarCalculator();
+        XVarCalculator calc = new XVarCalculator();
 
         timer.start();
         List<IPoint> points = calc.calculate(expression, -100, 100);

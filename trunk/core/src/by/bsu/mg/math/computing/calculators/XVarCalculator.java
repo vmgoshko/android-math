@@ -1,6 +1,7 @@
 package by.bsu.mg.math.computing.calculators;
 
 import by.bsu.mg.math.computing.MathExtended;
+import by.bsu.mg.math.exceptions.computing.UnknownNodeTypeException;
 import by.bsu.mg.math.parsing.expressions.nodes.DoubleNode;
 import by.bsu.mg.math.parsing.expressions.nodes.Node;
 import by.bsu.mg.math.parsing.expressions.nodes.StringNode;
@@ -17,7 +18,7 @@ import java.util.Queue;
 /**
  * @author Vladimir Goshko uhoshka@exadel.com
  */
-public class OneVarCalculator {
+public class XVarCalculator {
     private final static int NO_ARG = 0;
     private static double step = 0.1;
     private List<IPoint> points = new LinkedList<IPoint>();
@@ -60,15 +61,19 @@ public class OneVarCalculator {
     /**
      * Recursive method that runs over expression tree and calculate expression value for xVal.
      *
-     * @param root      : expression to calculate
-     * @param           : x value
-     * @return          : expression value for xVal
-     *
+     * @param root : expression to calculate
+     * @param :    x value
+     * @return : expression value for xVal
      * @see Node
      */
     public double calculate(Node root, double xVal) {
         double result;
         LexemeType type = root.getType();
+
+        if (type == LexemeType.UNDEFINED) {
+        //    errors.add(new NodeTypeError(root)));
+            throw new UnknownNodeTypeException();
+        }
 
         if (type == LexemeType.VARIABLE) {
             result = xVal;

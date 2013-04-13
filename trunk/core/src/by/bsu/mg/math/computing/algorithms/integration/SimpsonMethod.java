@@ -1,7 +1,6 @@
 package by.bsu.mg.math.computing.algorithms.integration;
 
-import by.bsu.mg.math.computing.Calculator;
-import by.bsu.mg.math.computing.algorithms.integration.DefiniteIntegrator;
+import by.bsu.mg.math.computing.calculators.XVarCalculator;
 import by.bsu.mg.math.parsing.expressions.nodes.Node;
 
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ public class SimpsonMethod implements DefiniteIntegrator {
     public double integrate() {
 
         List<Double> segments = getSegments();
-        Calculator calc = new Calculator();
+        XVarCalculator calc = new XVarCalculator();
         double result = 0;
 
         for(int i = 0; i < segments.size() - 1; i++){

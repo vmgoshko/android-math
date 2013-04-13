@@ -1,7 +1,6 @@
 package by.bsu.mg.math.parsing.expressions;
 
-import by.bsu.mg.math.computing.Calculator;
-import by.bsu.mg.math.computing.calculators.OneVarCalculator;
+import by.bsu.mg.math.computing.calculators.XVarCalculator;
 import by.bsu.mg.math.parsing.expressions.nodes.Node;
 import by.bsu.mg.math.parsing.lexemes.Lexeme;
 import by.bsu.mg.math.parsing.lexemes.LexemeType;
@@ -11,7 +10,7 @@ import by.bsu.mg.math.parsing.lexemes.LexemeType;
  */
 public class ExpressionOptimizer {
 
-    private final OneVarCalculator calc = new OneVarCalculator();
+    private final XVarCalculator calc = new XVarCalculator();
 
     public void optimize(Node root) {
         tryConstant(root);

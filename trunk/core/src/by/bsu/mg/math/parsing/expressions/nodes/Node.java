@@ -16,10 +16,6 @@ public abstract class Node {
 
     public abstract void setValue(Lexeme value);
 
-    public void setChildren(List<Node> children) {
-        this.children = children;
-    }
-
     public void setChild(int index, Node child) {
         if (children == null) {
             children = new LinkedList<Node>();
@@ -38,6 +34,10 @@ public abstract class Node {
 
     public List<Node> getChildren() {
         return children;
+    }
+
+    public void setChildren(List<Node> children) {
+        this.children = children;
     }
 
     public int getChildrenCount() {

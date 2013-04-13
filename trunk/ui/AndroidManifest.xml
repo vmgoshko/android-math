@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity android:name="by.bsu.mg.math.activities.Differentiate"
-                   android:label="@string/diffActivity">
+                    android:label="@string/diffActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

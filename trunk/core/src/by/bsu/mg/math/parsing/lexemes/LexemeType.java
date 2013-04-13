@@ -6,7 +6,6 @@ public enum LexemeType {
     CLOSE_BRACKET(-2),
     SEPARATOR(-1),
 
-
     BINARY_PLUS(0),
     BINARY_MINUS(1),
     BINARY_MULTIPLY(2),
