@@ -1,8 +1,6 @@
 package by.bsu.mg.math.parsing.expressions.nodes;
 
-import android.util.Log;
 import by.bsu.mg.math.parsing.lexemes.Lexeme;
-import by.bsu.mg.math.parsing.lexemes.LexemeEvaluator;
 
 /**
  * Vladimir Goshko vmgoshko@gmail.com
@@ -10,8 +8,7 @@ import by.bsu.mg.math.parsing.lexemes.LexemeEvaluator;
 public class StringNode extends Node {
     private String value;
 
-    public StringNode(){
-
+    public StringNode() {
     }
 
     public StringNode(Lexeme lexeme) {
@@ -31,7 +28,12 @@ public class StringNode extends Node {
         return value;
     }
 
-    public void setValue(String string){
+    public void setValue(String string) {
         value = string;
+    }
+
+    @Override
+    public String toString() {
+        return value;
     }
 }

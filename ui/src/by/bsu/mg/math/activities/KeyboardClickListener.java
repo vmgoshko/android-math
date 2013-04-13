@@ -5,8 +5,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import by.bsu.mg.math.computing.Calculator;
-import by.bsu.mg.math.computing.calculators.OneVarCalculator;
+import by.bsu.mg.math.computing.calculators.XVarCalculator;
 import by.bsu.mg.math.parsing.expressions.ExpressionBuilder;
 import by.bsu.mg.math.parsing.expressions.nodes.Node;
 import by.bsu.mg.math.parsing.lexemes.Lexeme;
@@ -215,6 +214,7 @@ public class KeyboardClickListener implements View.OnClickListener {
             case R.id.btnClear:
                 editText.clear();
                 break;
+
             case R.id.btnEqual:
                 String exprStr = editText.getText().toString();
 
@@ -224,7 +224,7 @@ public class KeyboardClickListener implements View.OnClickListener {
 
                 ExpressionBuilder expressionBuilder = new ExpressionBuilder();
                 Node root = expressionBuilder.buildTree(exprStr);
-                OneVarCalculator calculator = new OneVarCalculator();
+                XVarCalculator calculator = new XVarCalculator();
                 double result = calculator.calculate(root);
                 outView.setText(String.valueOf(result).replaceAll("Infinity","∞"));
 
