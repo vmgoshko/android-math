@@ -225,7 +225,7 @@ public class KeyboardClickListener implements View.OnClickListener {
                 ExpressionBuilder expressionBuilder = new ExpressionBuilder();
                 Node root = expressionBuilder.buildTree(exprStr);
                 XVarCalculator calculator = new XVarCalculator();
-                double result = calculator.calculate(root);
+                double result = calculator.calculateNoArg(root);
                 outView.setText(String.valueOf(result).replaceAll("Infinity","∞"));
 
                 break;

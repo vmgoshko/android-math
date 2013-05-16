@@ -41,7 +41,7 @@ public class CharacterDerivator {
                 return new DoubleNode(new Lexeme("0", expr.getLevel(), LexemeType.NUMBER));
 
             case VARIABLE:
-                return new StringNode(new Lexeme("1", expr.getLevel(), LexemeType.NUMBER));
+                return new DoubleNode(new Lexeme("1", expr.getLevel(), LexemeType.NUMBER));
         }
 
         return null;
@@ -269,7 +269,22 @@ public class CharacterDerivator {
     }
 
     private Node diffPow(Node expr) {
-        Node root = new StringNode(new Lexeme("*", 0, LexemeType.BINARY_MULTIPLY));
+        Node root;
+
+        if (expr.getChild(1).getType() == LexemeType.NUMBER) {
+            root = new StringNode(new Lexeme("*", 0, LexemeType.BINARY_MULTIPLY));
+            root.setChild(0, expr.getChild(1));
+
+            Node rightMultArg = new StringNode(new Lexeme("^", 0, LexemeType.BINARY_POWER));
+            rightMultArg.setChild(0, expr.getChild(0));
+            Double power = ((DoubleNode)expr.getChild(1)).getValue();
+
+            rightMultArg.setChild(1, new DoubleNode(new Lexeme(String.valueOf(power - 1), 0, LexemeType.NUMBER)));
+            root.setChild(1, rightMultArg);
+            return root;
+        }
+
+        root = new StringNode(new Lexeme("*", 0, LexemeType.BINARY_MULTIPLY));
         Node leftMultArg = new StringNode(new Lexeme("^", 0, LexemeType.BINARY_POWER));
 
         Node leftPowerArg = new DoubleNode(new Lexeme(String.valueOf(Math.exp(1)), 0, LexemeType.NUMBER));
@@ -298,7 +313,7 @@ public class CharacterDerivator {
         Node rightPlusRightArg = new StringNode(new Lexeme("ln", 0, LexemeType.FUNCTION));
         rightPlusRightArg.setChild(0, expr.getChild(0));
 
-        rightPlusArg.setChild(0, differentiate(expr.getChild(0)));
+        rightPlusArg.setChild(0, differentiate(expr.getChild(1)));
         rightPlusArg.setChild(1, rightPlusRightArg);
 
         rightMultArg.setChild(0, leftPlusArg);
@@ -314,7 +329,7 @@ public class CharacterDerivator {
 
         Node pow = new StringNode(new Lexeme("^", 0, LexemeType.BINARY_POWER));
         Node rightPow = new DoubleNode(new Lexeme("2", 0, LexemeType.NUMBER));
-        Node leftPow = differentiate(expr.getChild(1));
+        Node leftPow = expr.getChild(1);
         pow.setChild(0, leftPow);
         pow.setChild(1, rightPow);
 
@@ -333,6 +348,9 @@ public class CharacterDerivator {
 
         minusRightMult.setChild(0, rightMultLeft);
         minusRightMult.setChild(1, rightMultRight);
+
+        minus.setChild(0, minusLeftMult);
+        minus.setChild(1, minusRightMult);
 
         root.setChild(0, minus);
         root.setChild(1, pow);

@@ -13,7 +13,7 @@ public class ExpressionOptimizer {
     private final XVarCalculator calc = new XVarCalculator();
 
     public void optimize(Node root) {
-        tryConstant(root);
+        //tryConstant(root);
         //TODO: other optimization
     }
 
@@ -28,7 +28,7 @@ public class ExpressionOptimizer {
         }
 
         if (isConstBranches) {
-            double subTreeValue = calc.calculate(root);
+            double subTreeValue = calc.calculateNoArg(root);
             root.setChildren(null);
             root.setValue(
                     new Lexeme(Double.toString(subTreeValue), root.getLevel(), LexemeType.NUMBER)

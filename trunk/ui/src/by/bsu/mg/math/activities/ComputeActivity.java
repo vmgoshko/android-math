@@ -18,19 +18,19 @@ public class ComputeActivity extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        String expr = "(sin(x)+ln(343434*x))^2+(sin(x)+ln(2*x))^2+(sin(x)+ln(2*x))^2+(sin(x)+ln(343434*x))^2+(sin(x)+ln(343434*x))^2+(sin(x)+ln(343434*x))^2+(sin(x)+ln(343434*x))^2+(sin(x)+ln(343434*x))^2";
-        ExpressionBuilder expressionBuilder = new ExpressionBuilder();
-        Node expression = expressionBuilder.buildTree(expr);
-        XVarCalculator calc = new XVarCalculator();
+      /*  ExpressionBuilder builder = new ExpressionBuilder();
+        XVarCalculator calculator = new XVarCalculator();
+        Node root = builder.buildTree("cos(x)+ln(x)");
 
-        Log.d("__EXPR__", expr);
-        while(true){
-            timer.start();
-            calc.calculate(expression, -1000, 1000);
-            timer.stop();
+        long currMillis = System.currentTimeMillis();
+        for (int i = 0; i < 5_000_000; i++) {
+            calculator.calculate(root, Math.sin(i));
         }
-    }
 
+        double time = (System.currentTimeMillis() - currMillis) / (double) 1000;
+        Log.d("__TIMER__", String.valueOf(time));
+        */
+    }
 
     @Override
     protected void onPause() {

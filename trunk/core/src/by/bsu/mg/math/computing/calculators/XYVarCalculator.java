@@ -1,7 +1,6 @@
 package by.bsu.mg.math.computing.calculators;
 
 import by.bsu.mg.math.computing.Borders;
-import by.bsu.mg.math.computing.MathExtended;
 import by.bsu.mg.math.exceptions.computing.UnknownNodeTypeException;
 import by.bsu.mg.math.parsing.expressions.nodes.DoubleNode;
 import by.bsu.mg.math.parsing.expressions.nodes.Node;
@@ -14,29 +13,25 @@ import by.bsu.mg.math.utils.Point2d;
 import java.util.*;
 
 /**
- * @author Vladimir Goshko uhoshka@exadel.com
+ * @author Vladimir Goshko vmgoshko@gmail.com
  */
-public class XVarCalculator extends Calculator {
+public class XYVarCalculator extends Calculator {
     private List<IPoint> points = new LinkedList<IPoint>();
     private Queue<IError> errors = new ArrayDeque<IError>();
 
-    public XVarCalculator()
-    {
+    public XYVarCalculator() {
 
     }
 
-    public XVarCalculator(Map<String, Borders> borders) {
+    public XYVarCalculator(Map<String, Borders> borders) {
         super(borders);
     }
 
-
-    public double calculateNoArg(Node root)
-    {
-        if(root == null)
+    public double calculateNoArg(Node root) {
+        if (root == null)
             throw new NullPointerException(this.getClass() + " root is null");
-        return calculate(root,NO_ARG);
+        return calculate(root, NO_ARG, NO_ARG);
     }
-
 
     /**
      * Use this method to calculate value of expression for each x value from [xMin, xMax] range.
@@ -44,19 +39,19 @@ public class XVarCalculator extends Calculator {
      * @param root : expression to calculate
      * @return List<Point2d>    : list of expression values for each x value from [xMin, xMax] range
      * @see Node
-     * @see Point2d
+     * @see by.bsu.mg.math.utils.Point2d
      * @see java.util.List
      */
     public List<IPoint> calculate(Node root) {
-        double xVal = vars.get("x");
+       /* double xVal = vars.get("x");
         double xMax = borders.get("x").END;
 
         while (xVal <= xMax) {
             points.add(new Point2d(xVal, calculate(root, xVal)));
             xVal += step;
         }
-
-        return points;
+                           */
+        return null;
     }
 
     /**
@@ -67,7 +62,7 @@ public class XVarCalculator extends Calculator {
      * @return : expression value for xVal
      * @see Node
      */
-    public double calculate(Node root, double xVal) {
+    public double calculate(Node root, double xVal, double yVal) {
         double result;
         LexemeType type = root.getType();
 
@@ -77,7 +72,11 @@ public class XVarCalculator extends Calculator {
         }
 
         if (type == LexemeType.VARIABLE) {
-            result = xVal;
+            if ("x".equals(((StringNode) root).getValue())) {
+                result = xVal;
+            } else {
+                result = yVal;
+            }
         } else if (type == LexemeType.NUMBER) {
             result = ((DoubleNode) root).getValue();
         } else {
@@ -87,19 +86,19 @@ public class XVarCalculator extends Calculator {
                 case 1:
                     result = calculateOneArgOperation(((StringNode) root).getValue(),
                             type,
-                            calculate(children.get(0), xVal));
+                            calculate(children.get(0), xVal, yVal));
                     break;
                 case 2:
                     result = calculateTwoArgOperation(((StringNode) root).getValue(),
                             type,
-                            calculate(root.getChild(0), xVal),
-                            calculate(root.getChild(1), xVal));
+                            calculate(root.getChild(0), xVal, yVal),
+                            calculate(root.getChild(1), xVal, yVal));
                     break;
                 default:
                     double[] childrenValues = new double[children.size()];
 
                     for (int i = 0; i < children.size(); i++) {
-                        childrenValues[i] = calculate(children.get(i), xVal);
+                        childrenValues[i] = calculate(children.get(i), xVal, yVal);
                     }
                     result = calculateManyArgOperation(((StringNode) root).getValue(), type, childrenValues);
                     break;
