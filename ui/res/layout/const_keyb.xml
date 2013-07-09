@@ -23,4 +23,13 @@
 
 
     </TableRow>
+    <TableRow android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/tableRow1"
+              android:layout_weight="0.2">
+    </TableRow>
+    <TableRow android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/tableRow1"
+              android:layout_weight="0.2">
+    </TableRow>
+    <TableRow android:layout_width="fill_parent" android:layout_height="fill_parent" android:id="@+id/tableRow1"
+              android:layout_weight="0.2">
+    </TableRow>
 </TableLayout>

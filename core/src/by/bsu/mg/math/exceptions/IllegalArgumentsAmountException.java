@@ -11,12 +11,12 @@ public class IllegalArgumentsAmountException extends RuntimeException {
     private String operation;
     private int argsAmount;
 
-    public IllegalArgumentsAmountException(String operation, int argsAmount){
+    public IllegalArgumentsAmountException(String operation, int argsAmount) {
         this.operation = operation;
         this.argsAmount = argsAmount;
     }
 
-    public String toString(){
+    public String toString() {
         return String.format("Operation %s can't have %d arguments", operation, argsAmount);
     }
 

@@ -1,42 +1,38 @@
 package by.bsu.mg.math.computing.calculators;
 
-import by.bsu.mg.math.computing.Borders;
-import by.bsu.mg.math.computing.MathExtended;
 import by.bsu.mg.math.exceptions.computing.UnknownNodeTypeException;
 import by.bsu.mg.math.parsing.expressions.nodes.DoubleNode;
 import by.bsu.mg.math.parsing.expressions.nodes.Node;
 import by.bsu.mg.math.parsing.expressions.nodes.StringNode;
-import by.bsu.mg.math.parsing.lexemes.IError;
 import by.bsu.mg.math.parsing.lexemes.LexemeType;
+import by.bsu.mg.math.utils.Borders;
 import by.bsu.mg.math.utils.IPoint;
 import by.bsu.mg.math.utils.Point2d;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Vladimir Goshko uhoshka@exadel.com
  */
-public class XVarCalculator extends Calculator {
-    private List<IPoint> points = new LinkedList<IPoint>();
-    private Queue<IError> errors = new ArrayDeque<IError>();
+public class XVarCalculator extends OneVarCalculator {
 
-    public XVarCalculator()
-    {
+    public XVarCalculator() {
 
     }
 
     public XVarCalculator(Map<String, Borders> borders) {
         super(borders);
+        width = 100;
+        this.step = (borders.get("x").END - borders.get("x").BEGIN) / width;
     }
 
-
-    public double calculateNoArg(Node root)
-    {
-        if(root == null)
+    public double calculateNoArg(Node root) {
+        if (root == null)
             throw new NullPointerException(this.getClass() + " root is null");
-        return calculate(root,NO_ARG);
-    }
 
+        return calculate(root, NO_ARG);
+    }
 
     /**
      * Use this method to calculate value of expression for each x value from [xMin, xMax] range.
@@ -48,9 +44,14 @@ public class XVarCalculator extends Calculator {
      * @see java.util.List
      */
     public List<IPoint> calculate(Node root) {
-        double xVal = vars.get("x");
+        points.clear();
+        errors.clear();
+        createVars(borders);
+
+        double xVal = borders.get("x").BEGIN;
         double xMax = borders.get("x").END;
 
+        this.step = (xMax - xVal) / width;
         while (xVal <= xMax) {
             points.add(new Point2d(xVal, calculate(root, xVal)));
             xVal += step;

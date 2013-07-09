@@ -24,23 +24,23 @@ public enum LexemeType {
     private static int maxPriority = 10;
     private int priority;
 
-    LexemeType(int priority){
+    LexemeType(int priority) {
         this.priority = priority;
     }
 
-    public int getPriority(){
+    public int getPriority() {
         return priority;
     }
 
-    public static int getMaxPriority(){
+    public static int getMaxPriority() {
         return maxPriority;
     }
 
-    public boolean equals(int priority){
-         return this.priority == priority;
+    public boolean equals(int priority) {
+        return this.priority == priority;
     }
 
-    public boolean equals(LexemeType lexemeType){
+    public boolean equals(LexemeType lexemeType) {
         return this.priority == lexemeType.getPriority();
     }
 

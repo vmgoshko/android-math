@@ -23,25 +23,27 @@
                 android:layout_marginTop="5dp"
                 android:layout_width="fill_parent" android:layout_height="fill_parent"
                 android:layout_weight="0.3" android:clickable="false" android:weightSum="1.0">
-            <by.bsu.mg.math.activities.ExpressionEditText
-                    android:layout_width ="fill_parent"
+            <by.bsu.mg.math.views.custom.ExpressionEditText
+                    android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:id="@+id/editTextDown" android:background="@drawable/custom_edit_text" android:autoText="false" android:textColor="#ffffff"
-                    android:textColorHint="#ffffff" android:layout_weight="0.5"/>
+                    android:id="@+id/integrationEditTextUp" android:background="@drawable/custom_edit_text"
+                    android:autoText="false" android:textColor="#ffffff"
+                    android:textColorHint="#ffffff" android:layout_weight="0.5" android:padding="3dp"/>
 
-            <by.bsu.mg.math.activities.ExpressionEditText
-                    android:layout_width ="fill_parent"
+            <by.bsu.mg.math.views.custom.ExpressionEditText
+                    android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:id="@+id/editTextDown" android:background="@drawable/custom_edit_text" android:autoText="false" android:textColor="#ffffff"
-                    android:textColorHint="#ffffff" android:layout_weight="0.5"/>
-            </LinearLayout>
-        <by.bsu.mg.math.activities.ExpressionEditText
-                android:layout_width ="fill_parent"
+                    android:id="@+id/integrationEditTextDown" android:background="@drawable/custom_edit_text"
+                    android:autoText="false" android:textColor="#ffffff"
+                    android:textColorHint="#ffffff" android:layout_weight="0.5" android:padding="3dp"/>
+        </LinearLayout>
+        <by.bsu.mg.math.views.custom.ExpressionEditText
+                android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
-                android:id="@+id/editText" android:background="@drawable/custom_edit_text" android:autoText="false" android:textColor="#ffffff"
+                android:id="@+id/firstExprEditText" android:background="@drawable/custom_edit_text"
+                android:autoText="false" android:textColor="#ffffff"
                 android:textColorHint="#ffffff" android:padding="10dp" android:layout_marginTop="5dp"
-                android:enabled="false" android:focusableInTouchMode="false" android:layout_weight="0.1"
-                android:clickable="false"/>
+                android:layout_weight="0.1"/>
         <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"

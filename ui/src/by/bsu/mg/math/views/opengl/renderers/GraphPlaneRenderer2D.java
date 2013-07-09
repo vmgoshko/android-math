@@ -1,10 +1,8 @@
-package by.bsu.mg.math.views;
+package by.bsu.mg.math.views.opengl.renderers;
 
-import android.opengl.GLES20;
 import android.opengl.GLSurfaceView.Renderer;
 import android.opengl.GLU;
 import by.bsu.mg.math.debug.Timer;
-import by.bsu.mg.math.parsing.expressions.nodes.Node;
 import by.bsu.mg.math.utils.IPoint;
 import by.bsu.mg.math.utils.Point2d;
 
@@ -21,7 +19,6 @@ import java.util.List;
 public abstract class GraphPlaneRenderer2D implements Renderer {
 
     protected final static int SIZEOF_FLOAT = Float.SIZE / 8;
-    protected final Node expr;
     protected List<IPoint> points;
     protected FloatBuffer buffer;
     protected float x;
@@ -34,14 +31,16 @@ public abstract class GraphPlaneRenderer2D implements Renderer {
     protected float orthoHeight;
     protected Point2d firstFingerPos[] = new Point2d[2];
     protected Point2d secondFingerPos[] = new Point2d[2];
+    protected int width;
+    protected int height;
+    protected float scaleFactor = 1;
+    protected int drawMode = GL10.GL_LINES;
     private float xFullOffset = 0;
     private float yFullOffset = 0;
-    private float scaleFactor = 1;
     private Timer timer = new Timer();
     private FloatBuffer axisBuffer;
 
-    public GraphPlaneRenderer2D(Node expr) {
-        this.expr = expr;
+    public GraphPlaneRenderer2D() {
         this.orthoWidth = 10;
         this.orthoHeight = orthoWidth;
         axisBuffer = createAxisBuffer();
@@ -59,7 +58,10 @@ public abstract class GraphPlaneRenderer2D implements Renderer {
     }
 
     private FloatBuffer createAxisBuffer() {
-        float bufferArray[] = new float[8];
+        int position = 0;
+        int xAxisLines = (int) orthoWidth;
+        int yAxisLines = (int) orthoHeight;
+        float bufferArray[] = new float[8 + 4 * xAxisLines + 4 * yAxisLines];
 
         bufferArray[0] = x - orthoWidth / 2;
         bufferArray[1] = y;
@@ -72,6 +74,22 @@ public abstract class GraphPlaneRenderer2D implements Renderer {
 
         bufferArray[6] = x;
         bufferArray[7] = y - orthoHeight / 2;
+
+        position = 8;
+        for (int i = 1; i <= 4 * xAxisLines; i += 4) {
+            bufferArray[7 + i] = i / 4 - xAxisLines / 2;
+            bufferArray[7 + i + 1] = 0.5f;
+            bufferArray[7 + i + 2] = i / 4 - xAxisLines / 2;
+            bufferArray[7 + i + 3] = -0.5f;
+            position+=4;
+        }
+
+        for (int i = 0; i < 4 * yAxisLines; i += 4) {
+            bufferArray[position + i] = 0.5f;
+            bufferArray[position + i + 1] = i / 4 - yAxisLines / 2;
+            bufferArray[position + i + 2] = -0.5f;
+            bufferArray[position + i + 3] = i / 4 - yAxisLines / 2;
+        }
 
         return wrap(bufferArray);
     }
@@ -91,8 +109,8 @@ public abstract class GraphPlaneRenderer2D implements Renderer {
 
     public void onDrawFrame(GL10 gl) {
 
-        GLES20.glClearColor(1, 1, 1, 1);
-        GLES20.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+        gl.glClearColor(1, 1, 1, 1);
+        gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 
         gl.glMatrixMode(GL10.GL_MODELVIEW);
         gl.glLoadIdentity();
@@ -102,10 +120,11 @@ public abstract class GraphPlaneRenderer2D implements Renderer {
 
         gl.glColor4f(0.5f, 0, 0, 0);
         gl.glLineWidth(2);
+
         if (buffer != null) {
             gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
             gl.glVertexPointer(2, GL10.GL_FLOAT, 0, buffer);
-            gl.glDrawArrays(GL10.GL_LINES, 0, points.size());
+            gl.glDrawArrays(drawMode, 0, points.size());
             gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
         }
 
@@ -119,10 +138,22 @@ public abstract class GraphPlaneRenderer2D implements Renderer {
         gl.glMatrixMode(GL10.GL_PROJECTION);
         gl.glLoadIdentity();
 
+        this.width = width;
+        this.height = height;
         this.orthoWidth = 10 / scaleFactor;
         this.orthoHeight = orthoWidth * height / width / scaleFactor;
 
         GLU.gluOrtho2D(gl, -orthoWidth / 2, orthoWidth / 2, -orthoHeight / 2, orthoHeight / 2);
+        setWidth(width);
+        setHeight(height);
+    }
+
+    protected void setHeight(int height) {
+        this.height = height;
+    }
+
+    protected void setWidth(int width) {
+        this.width = width;
     }
 
     protected FloatBuffer pointsToFloatBuffer(List<IPoint> points) {
@@ -157,52 +188,11 @@ public abstract class GraphPlaneRenderer2D implements Renderer {
 
     private void drawAxis(GL10 gl) {
         gl.glColor4f(0, 0, 0, 1);
+        gl.glLineWidth(1);
 
         gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
         gl.glVertexPointer(2, GL10.GL_FLOAT, 0, axisBuffer);
         gl.glDrawArrays(GL10.GL_LINES, 0, axisBuffer.capacity() / 2);
         gl.glDisableClientState(GL10.GL_VERTEX_ARRAY);
-
     }
-
-    /*private void translate(View view, MotionEvent motionEvent) {
-        int x = (int) motionEvent.getX();
-        int y = (int) motionEvent.getY();
-
-        prevTouchX = touchX;
-        prevTouchY = touchY;
-
-        touchX = x;
-        touchY = y;
-
-        if (prevTouchX == -1)
-            prevTouchX = x;
-
-        if (prevTouchY == -1)
-            prevTouchY = y;
-
-        float translX = orthoWidth * (touchX - prevTouchX) / view.getWidth();
-        float translY = -orthoHeight * (touchY - prevTouchY) / view.getHeight();
-
-        translateEyeXY(translX, translY);
-
-    }
-
-    private void translateEyeXY(float x, float y) {
-        this.x += x;
-        this.y += y;
-        xFullOffset += x;
-        yFullOffset += y;
-
-        boolean isXRecalc = Math.abs(xFullOffset) > orthoWidth;
-        boolean isYRecalc = Math.abs(yFullOffset) > orthoHeight;
-
-        if (isXRecalc || isYRecalc) {
-            this.points = calcPoints();
-            buffer = pointsToFloatBuffer(this.points);
-            xFullOffset = 0;
-            yFullOffset = 0;
-        }
-    }*/
-
 }

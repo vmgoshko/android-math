@@ -31,9 +31,9 @@ public class Point2d implements IPoint, Comparable<Point2d> {
     }
 
     public void setCoords(double[] coords) throws IllegalArgumentException {
-        if(coords.length != 2){
+        if (coords.length != 2) {
             throw new IllegalArgumentException(
-                    String.format("Can't set coords %s to 2D point",Arrays.toString(coords))
+                    String.format("Can't set coords %s to 2D point", Arrays.toString(coords))
             );
         }
 
@@ -42,12 +42,12 @@ public class Point2d implements IPoint, Comparable<Point2d> {
     }
 
 
-    public void setCoords(double x, double y){
+    public void setCoords(double x, double y) {
         this.x = x;
         this.y = y;
     }
 
-    public float[] to2dArray(){
+    public float[] to2dArray() {
         float[] pointArr = new float[2];
         pointArr[0] = (float) x;
         pointArr[1] = (float) y;
@@ -55,7 +55,7 @@ public class Point2d implements IPoint, Comparable<Point2d> {
         return pointArr;
     }
 
-    public float[] to3dArray(){
+    public float[] to3dArray() {
         float[] pointArr = new float[3];
         pointArr[0] = (float) x;
         pointArr[1] = (float) y;
@@ -86,10 +86,10 @@ public class Point2d implements IPoint, Comparable<Point2d> {
 
     @Override
     public int compareTo(Point2d point2d) {
-        if(this.equals(point2d))
+        if (this.equals(point2d))
             return 0;
 
-        if(x < point2d.x)
+        if (x < point2d.x)
             return -1;
         else
             return y < point2d.y ? -1 : 1;

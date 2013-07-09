@@ -5,7 +5,7 @@ import java.util.Arrays;
 /**
  * Create by Vladimir Goshko vmgoshko@gmail.com
  */
-public class Point3d implements IPoint{
+public class Point3d implements IPoint {
     private double x;
     private double y;
     private double z;
@@ -41,9 +41,9 @@ public class Point3d implements IPoint{
     }
 
     public void setCoords(double[] coords) throws IllegalArgumentException {
-        if(coords.length != 3){
+        if (coords.length != 3) {
             throw new IllegalArgumentException(
-                    String.format("Can't set coords %s to 2D point",Arrays.toString(coords))
+                    String.format("Can't set coords %s to 2D point", Arrays.toString(coords))
             );
         }
 
@@ -52,7 +52,7 @@ public class Point3d implements IPoint{
         z = coords[2];
     }
 
-    public float[] to2dArray(){
+    public float[] to2dArray() {
         float[] pointArr = new float[2];
         pointArr[0] = (float) x;
         pointArr[1] = (float) y;
@@ -60,12 +60,20 @@ public class Point3d implements IPoint{
         return pointArr;
     }
 
-    public float[] to3dArray(){
+    public float[] to3dArray() {
         float[] pointArr = new float[3];
         pointArr[0] = (float) x;
         pointArr[1] = (float) y;
         pointArr[2] = (float) z;
 
         return pointArr;
+    }
+
+    @Override
+    public String toString() {
+        return "Point3d{"
+                + x + ","
+                + y + ","
+                + z + "}";
     }
 }

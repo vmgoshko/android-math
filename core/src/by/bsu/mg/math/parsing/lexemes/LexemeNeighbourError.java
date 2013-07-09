@@ -17,7 +17,7 @@ public class LexemeNeighbourError implements IError {
     public String toString() {
         String msg = "Lexeme %s with type %s can not be after lexeme %s with type %s";
         return String.format(msg,
-                left.getValue(), left.getType().toString(),
-                right.getValue(), right.getType().toString());
+                left.getValue(), right.getType().toString(),
+                right.getValue(), left.getType().toString());
     }
 }

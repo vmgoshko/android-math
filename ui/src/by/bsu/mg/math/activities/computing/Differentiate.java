@@ -1,8 +1,9 @@
-package by.bsu.mg.math.activities;
+package by.bsu.mg.math.activities.computing;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
+import by.bsu.mg.math.activities.R;
 import by.bsu.mg.math.computing.algorithms.differentiation.NumericalDerivator;
 import by.bsu.mg.math.parsing.expressions.ExpressionBuilder;
 import by.bsu.mg.math.parsing.expressions.nodes.Node;

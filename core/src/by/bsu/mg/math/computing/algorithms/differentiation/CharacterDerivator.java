@@ -277,7 +277,7 @@ public class CharacterDerivator {
 
             Node rightMultArg = new StringNode(new Lexeme("^", 0, LexemeType.BINARY_POWER));
             rightMultArg.setChild(0, expr.getChild(0));
-            Double power = ((DoubleNode)expr.getChild(1)).getValue();
+            Double power = ((DoubleNode) expr.getChild(1)).getValue();
 
             rightMultArg.setChild(1, new DoubleNode(new Lexeme(String.valueOf(power - 1), 0, LexemeType.NUMBER)));
             root.setChild(1, rightMultArg);

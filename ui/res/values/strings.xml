@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello math!</string>
-    <string name="app_name">MATH_APP</string>
+    <string name="app_name">MgMath</string>
 
     <string name="str_1">1</string>
     <string name="str_2">2</string>
@@ -27,4 +26,5 @@
     <string name="calculatorActivity">Calculator</string>
     <string name="diffActivity">Differentiation</string>
     <string name="integrateActivity">Integration</string>
+    <string name="graph2dExpl">Graph2D Explicit</string>
 </resources>

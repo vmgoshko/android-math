@@ -19,11 +19,12 @@ public class ExpressionBuilder {
 
     /**
      * Parse string expression and build it's tree
-     * @see by.bsu.mg.math.parsing.expressions.nodes.Node
-     * @see CantParseException
-     * @param expression    : expression to parse
+     *
+     * @param expression : expression to parse
      * @return Node root    : root of expression tree
      * @throws CantParseException
+     * @see by.bsu.mg.math.parsing.expressions.nodes.Node
+     * @see CantParseException
      */
     public Node buildTree(String expression) throws CantParseException {
         LexemeParser parser = new LexemeParser(expression);
@@ -32,7 +33,7 @@ public class ExpressionBuilder {
         LexemeEvaluator.evaluateLexemeList(lexemes);
         LexemeListValidator validator = new LexemeListValidator(lexemes);
 
-        if(!validator.validate()) {
+        if (!validator.validate()) {
             errors.addAll(validator.getErrors());
             throw new CantParseException(expression, errors);
         }
@@ -40,8 +41,8 @@ public class ExpressionBuilder {
         maxLevel = LexemeEvaluator.getMaxLevel();
         Node exprTreeRoot = findRoot(0, 0, lexemes.size());
 
-     //   ExpressionOptimizer exprOptimizer = new ExpressionOptimizer();
-     //   exprOptimizer.optimize(exprTreeRoot);
+        //   ExpressionOptimizer exprOptimizer = new ExpressionOptimizer();
+        //   exprOptimizer.optimize(exprTreeRoot);
 
         return exprTreeRoot;
     }
@@ -64,7 +65,7 @@ public class ExpressionBuilder {
     private Node findPriorityLeveledRoot(int priority, int level, int begin, int end) {
         Node root;
 
-        for (int i = end-1; i >= begin; i--) {
+        for (int i = end - 1; i >= begin; i--) {
             Lexeme lexeme = lexemes.get(i);
             if (lexeme.getPriority() == priority && lexeme.getLevel() == level) {
                 if (LexemeEvaluator.isUnaryMinus(lexeme.getType())) {
@@ -97,7 +98,7 @@ public class ExpressionBuilder {
                 }
 
                 if (LexemeEvaluator.isSimpleArgument(lexeme)) {
-                    if(lexeme.getType() == LexemeType.VARIABLE){
+                    if (lexeme.getType() == LexemeType.VARIABLE) {
                         root = new StringNode();
                     } else {
                         root = new DoubleNode();
@@ -115,7 +116,7 @@ public class ExpressionBuilder {
         List<Node> children = new LinkedList<Node>();
         List<Integer> arguments = separateArguments(level, begin, end);
 
-        for (int i = 0; i < arguments.size() - 1; i+=2) {
+        for (int i = 0; i < arguments.size() - 1; i += 2) {
             children.add(findRoot(level, arguments.get(i), arguments.get(i + 1)));
         }
 
@@ -165,5 +166,9 @@ public class ExpressionBuilder {
         }
 
         return i - 1;
+    }
+
+    public Queue<IError> getErrors() {
+        return errors;
     }
 }

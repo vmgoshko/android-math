@@ -23,7 +23,7 @@ public class SimpsonMethod implements DefiniteIntegrator {
         this.expr = expr;
         this.sign = 1;
 
-        if(b < a){
+        if (b < a) {
             double swap = this.a;
             this.a = b;
             this.b = swap;
@@ -39,23 +39,28 @@ public class SimpsonMethod implements DefiniteIntegrator {
         XVarCalculator calc = new XVarCalculator();
         double result = 0;
 
-        for(int i = 0; i < segments.size() - 1; i++){
+        for (int i = 0; i < segments.size() - 1; i++) {
             double a = segments.get(i);
-            double b = segments.get(i+1);
+            double b = segments.get(i + 1);
 
-            result += (b - a)/6*(calc.calculate(expr, a) + calc.calculate(expr, (a+b)/2)*4 + calc.calculate(expr, b));
+            System.out.println(calc.calculate(expr, (a + b) / 2) * 4);
+            double f = calc.calculate(expr, a);
+            double s = calc.calculate(expr, (a + b) / 2);
+            double t = calc.calculate(expr, b);
+
+            result += (b - a) / 6 * (f + s * 4 + t);
         }
 
-        return result*sign;
+        return result * sign;
     }
 
     private List<Double> getSegments() {
         List<Double> segments = new ArrayList<Double>();
         int segmentsAmount = getSegmentsAmount();
-        double h = (b-a)/segmentsAmount;
+        double h = (b - a) / segmentsAmount;
 
         double position = a;
-        while(position <= b){
+        while (position <= b) {
             segments.add(position);
             position += h;
         }

@@ -13,22 +13,22 @@ public class NumericalDerivator {
         double h = 0.00000001;
         switch (power) {
             case 1:
-                return ( -calc.calculate(root, point + 2 * h) +
+                return (-calc.calculate(root, point + 2 * h) +
                         8 * calc.calculate(root, point + h) -
                         8 * calc.calculate(root, point - h) +
                         calc.calculate(root, point - 2 * h))
                         / (12 * h);
             case 2:
-                return ( calc.calculate(root,point + h) -
+                return (calc.calculate(root, point + h) -
                         2 * calc.calculate(root, point) +
-                        calc.calculate(root,point - h))
+                        calc.calculate(root, point - h))
                         / (h * h);
             case 3:
-                return ( calc.calculate(root, point + 3 * h / 2) -
+                return (calc.calculate(root, point + 3 * h / 2) -
                         3 * calc.calculate(root, point + h / 2) +
                         3 * calc.calculate(root, point - h / 2) -
-                        calc.calculate(root, point - 3 * h / 2) )
-                        / ( h * h * h);
+                        calc.calculate(root, point - 3 * h / 2))
+                        / (h * h * h);
             default:
                 break;
         }

@@ -1,4 +1,4 @@
-package by.bsu.mg.math.activities;
+package by.bsu.mg.math.views.pages;
 
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;

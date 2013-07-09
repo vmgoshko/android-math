@@ -1,11 +1,10 @@
-package by.bsu.mg.math.activities;
+package by.bsu.mg.math.views.custom;
 
 import android.content.Context;
 import android.widget.EditText;
 import by.bsu.mg.math.parsing.lexemes.Lexeme;
 import by.bsu.mg.math.parsing.lexemes.LexemeType;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +22,6 @@ public class ExpressionEditText extends EditText {
         init();
     }
 
-
     public ExpressionEditText(android.content.Context context, android.util.AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
@@ -31,11 +29,10 @@ public class ExpressionEditText extends EditText {
 
     private void init() {
         sb = new StringBuilder();
-        lexemeBeginList = new ArrayList<Integer>();
+        lexemeBeginList = new ArrayList<>();
     }
 
     public boolean onTouchEvent(android.view.MotionEvent event) {
-
         super.onTouchEvent(event);
         int pos = getSelectionStart();
 
@@ -44,7 +41,8 @@ public class ExpressionEditText extends EditText {
         }
 
         setSelection(pos - lexemeBeginList.get(pos));
-        return true;
+
+        return false;
     }
 
     public void addLexemes(List<Lexeme> lexemeList) {
@@ -92,7 +90,6 @@ public class ExpressionEditText extends EditText {
         setSelection(0);
     }
 
-
     @Override
     protected boolean getDefaultEditable() {
         return true;
@@ -119,12 +116,23 @@ public class ExpressionEditText extends EditText {
     }
 
     @Override
-    public void setSelection(int index) {
-        if(index < 0 || index > this.length() ){
+    public void setSelection(int pos) {
+        if (pos < 0 || pos > this.length()) {
             return;
         }
 
-        super.setSelection(index);
+        if (pos == lexemeBeginList.size()) {
+            super.setSelection(pos);
+            return;
+        }
+
+        int currSelection = this.getSelectionStart();
+
+        if (currSelection > pos)
+            super.setSelection(pos - lexemeBeginList.get(pos));
+
+        if (currSelection < pos)
+            super.setSelection(nextLexemeBegin(pos));
     }
 
     @Override
@@ -143,5 +151,15 @@ public class ExpressionEditText extends EditText {
         super.setEllipsize(ellipsis);
     }
 
+    private int nextLexemeBegin(int pos) {
+        int i = 1;
+
+        while (lexemeBeginList.get(pos + i) != 0) {
+            i++;
+        }
+
+        int res = pos + i;
+        return res;
+    }
 
 }

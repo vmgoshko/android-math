@@ -19,8 +19,8 @@ public class CantParseException extends RuntimeException {
     }
 
     public String toString() {
-        StringBuilder errorMsg = new StringBuilder(msg);
-        for(int i = 0; i < errors.size(); i++){
+        StringBuilder errorMsg = new StringBuilder(String.format(msg, expr));
+        for (int i = 0; i < errors.size(); i++) {
             IError error = errors.poll();
             errorMsg.append(error + ";\n");
             errors.add(error);

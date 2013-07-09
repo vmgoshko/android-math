@@ -8,6 +8,7 @@ public interface IPoint {
 
     //TODO: projection
     public float[] to2dArray();
+
     //TODO: projection
     public float[] to3dArray();
 }
