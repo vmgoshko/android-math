@@ -61,7 +61,7 @@ public class LexemeParser {
             }
         }
 
-        if(lexemeValue != null){
+        if (lexemeValue != null) {
             currentPosition += lexemeValue.length();
         } else {
             throw new IllegalArgumentException("Lexeme can't be token at position " + currentPosition);
@@ -71,7 +71,7 @@ public class LexemeParser {
     /**
      * Tries to cut number lexeme.
      *
-     * @param expr - expression.
+     * @param expr  - expression.
      * @param start - start index of lexeme.
      * @return number lexeme
      */
@@ -87,7 +87,7 @@ public class LexemeParser {
     /**
      * Tries to cut word lexeme.
      *
-     * @param expr - expression.
+     * @param expr  - expression.
      * @param start - start index of lexeme.
      * @return lexeme
      */
@@ -105,7 +105,6 @@ public class LexemeParser {
      *
      * @param expr
      * @param position
-     * @return true if char at "position" is numerical symbol.
      * @return false if char at "position" isn't numerical symbol.
      */
     private boolean isNumber(String expr, int position) {
@@ -118,7 +117,6 @@ public class LexemeParser {
      *
      * @param expr
      * @param position
-     * @return true if char at "position" is alphabetic symbol.
      * @return false if char at "position" isn't alphabetic symbol.
      */
     private boolean isAlphabet(String expr, int position) {
@@ -136,7 +134,6 @@ public class LexemeParser {
      *
      * @param expr
      * @param position
-     * @return true if char at "position" is one-symbol lexeme.
      * @return false if char at "position" isn't one-symbol lexeme.
      */
     private boolean isOneSymbolLexeme(String expr, int position) {
@@ -149,7 +146,6 @@ public class LexemeParser {
      *
      * @param character
      * @param symbols
-     * @return true if "symbol list contains "character".
      * @return true if "symbol list not contains "character".
      */
     private boolean isCharExist(char character, char... symbols) {
@@ -163,11 +159,11 @@ public class LexemeParser {
 
     /**
      * Checks that "character" lies between "begin" char and "end" char, or "others" char list contains "character".
+     *
      * @param character
      * @param begin
      * @param end
      * @param others
-     * @return true
      * @return false
      */
     private boolean isCharBetween(char character, char begin, char end, char... others) {

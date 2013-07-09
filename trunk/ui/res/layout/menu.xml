@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+        android:weightSum="3" android:longClickable="false">
+    <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:weightSum="1" android:layout_weight="1">
+        <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Calculator"
+                android:id="@+id/startCalculatorBtn" android:layout_weight="0.5"/>
+        <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Implicit Graph"
+                android:id="@+id/startImplicitGraphBtn" android:layout_weight="0.5"/>
+    </TableRow>
+    <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:weightSum="1" android:layout_weight="1">
+        <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Explicit Graph"
+                android:id="@+id/startExplicitGraphBtn" android:layout_weight="0.5"/>
+        <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Parametric Graph"
+                android:id="@+id/startParametricGraphBtn" android:layout_weight="0.5"/>
+    </TableRow>
+    <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" android:weightSum="1" android:layout_weight="1">
+        <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Definite Integration"
+                android:id="@+id/startIntegrationBtn" android:layout_weight="0.5"/>
+        <!--<Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Derivation"
+                android:id="@+id/startDerivationBtn" android:layout_weight="0.5"/> -->
+
+        <Button
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="Explicit Surface"
+                android:id="@+id/startExplicit3Dbtn" android:layout_weight="0.5"/>
+    </TableRow>
+</TableLayout>

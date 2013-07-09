@@ -5,40 +5,51 @@
           android:versionName="1.0">
     <uses-sdk android:minSdkVersion="10"/>
     <application android:label="@string/app_name">
-        <activity android:name="by.bsu.mg.math.activities.CalculatorActivity"
+        <activity android:name=".MainMenu">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".computing.CalculatorActivity"
                   android:label="@string/calculatorActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".GraphingActivity"
+        <activity android:name=".graphing.Explicit2DGraphingActivity"
+                  android:label="@string/graph2dExpl">
+            <intent-filter>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".graphing.Implicit2DGraphingActivity"
                   android:label="@string/graph2dImpl">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="by.bsu.mg.math.activities.ComputeActivity"
-                  android:label="@string/compAct">
+        <activity android:name=".computing.IntegrateActivity"
+                  android:label="@string/integrateActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="by.bsu.mg.math.activities.IntegrateActivity"
-                    android:label="@string/integrateActivity">
+        <activity android:name=".computing.Differentiate"
+                  android:label="@string/diffActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="by.bsu.mg.math.activities.Differentiate"
-                    android:label="@string/diffActivity">
+        <activity android:name=".graphing.Parametric2DGraphingActivity" android:label="Graph 2D Parametric">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".graphing.Explicit3DGraphingActivity">
+            <intent-filter>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
     </application>
-</manifest> 
+</manifest>

@@ -1,6 +1,6 @@
 package by.bsu.mg.math.computing.algorithms;
 
-import by.bsu.mg.math.computing.Borders;
+import by.bsu.mg.math.utils.Borders;
 import by.bsu.mg.math.computing.calculators.XYVarCalculator;
 import by.bsu.mg.math.parsing.expressions.nodes.Node;
 import by.bsu.mg.math.utils.IPoint;
@@ -21,7 +21,7 @@ public class CashedMarchingSquares {
     private double yStep;
     private int maxLevel;
     private int minLevel;
-    private XYVarCalculator calc = new XYVarCalculator();
+    private XYVarCalculator calc = new XYVarCalculator(null);
     private List<Point2d> points = new LinkedList<>();
     private Node root;
     private HashMap<Point2d, Double> cash = new HashMap<>();

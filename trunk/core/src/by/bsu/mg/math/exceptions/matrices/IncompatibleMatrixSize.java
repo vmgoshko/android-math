@@ -10,7 +10,7 @@ public class IncompatibleMatrixSize extends RuntimeException {
     private int secondColumnsAmount;
     private final String msg = "Incompatible matrices sizes: %dx%d and %dx%d";
 
-    public IncompatibleMatrixSize(int n, int m, int i, int j){
+    public IncompatibleMatrixSize(int n, int m, int i, int j) {
         firstRowsAmount = n;
         firstColumnsAmount = m;
         secondColumnsAmount = i;

@@ -1,15 +1,17 @@
-package by.bsu.mg.math.activities;
+package by.bsu.mg.math.activities.listeners;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
-import by.bsu.mg.math.computing.calculators.XVarCalculator;
-import by.bsu.mg.math.parsing.expressions.ExpressionBuilder;
-import by.bsu.mg.math.parsing.expressions.nodes.Node;
+import by.bsu.mg.math.activities.R;
 import by.bsu.mg.math.parsing.lexemes.Lexeme;
 import by.bsu.mg.math.parsing.lexemes.LexemeType;
+import by.bsu.mg.math.views.custom.ExpressionEditText;
+import by.bsu.mg.math.views.pages.KeysPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,16 +19,15 @@ import java.util.List;
 /**
  * @author Vladimir Goshko vmgoshko@gmail.com
  */
-public class KeyboardClickListener implements View.OnClickListener {
-    private Activity activity;
-    private ExpressionEditText editText;
-    private TextView outView;
+public abstract class KeyboardClickListener implements View.OnClickListener, View.OnTouchListener {
+    protected ExpressionEditText currentEdit;
+    protected TextView outView;
+    protected Activity activity;
     private ViewPager pager;
-    private List<Lexeme> lexemesToPrint = new ArrayList<Lexeme>();
+    private List<Lexeme> lexemesToPrint = new ArrayList<>();
 
-    public KeyboardClickListener(Activity activity, ExpressionEditText editText, ViewPager pager, TextView outView) {
+    public KeyboardClickListener(Activity activity, ViewPager pager, TextView outView) {
         this.activity = activity;
-        this.editText = editText;
         this.pager = pager;
         this.outView = outView;
     }
@@ -37,6 +38,13 @@ public class KeyboardClickListener implements View.OnClickListener {
         registerBinary();
         registerConstant();
         registerOther();
+        registerVars();
+    }
+
+    private void registerVars() {
+        registerToView(R.id.btnX);
+        registerToView(R.id.btnY);
+        registerToView(R.id.btnT);
     }
 
     private void registerConstant() {
@@ -154,11 +162,14 @@ public class KeyboardClickListener implements View.OnClickListener {
             case R.id.btnMin:
             case R.id.btnTodeg:
             case R.id.btnTorad:
-                Lexeme func = new Lexeme( ((Button) view).getText().toString(), 0, LexemeType.FUNCTION);
-                Lexeme bracket = new Lexeme( "(", 0, LexemeType.OPEN_BRACKET);
+                if (currentEdit == null)
+                    break;
+
+                Lexeme func = new Lexeme(((Button) view).getText().toString(), 0, LexemeType.FUNCTION);
+                Lexeme bracket = new Lexeme("(", 0, LexemeType.OPEN_BRACKET);
                 lexemesToPrint.add(func);
                 lexemesToPrint.add(bracket);
-                editText.addLexemes(lexemesToPrint);
+                currentEdit.addLexemes(lexemesToPrint);
                 lexemesToPrint.clear();
                 break;
 
@@ -172,6 +183,9 @@ public class KeyboardClickListener implements View.OnClickListener {
             case R.id.btn8:
             case R.id.btn9:
             case R.id.btn0:
+            case R.id.btnX:
+            case R.id.btnY:
+            case R.id.btnT:
             case R.id.btnPlus:
             case R.id.btnMinus:
             case R.id.btnMul:
@@ -182,66 +196,93 @@ public class KeyboardClickListener implements View.OnClickListener {
             case R.id.btnComma:
             case R.id.btnOpenBracket:
             case R.id.btnCloseBracket: {
-                Lexeme lexeme = new Lexeme( ((Button) view).getText().toString(), 0, LexemeType.FUNCTION);
+                if (currentEdit == null)
+                    break;
+
+                Lexeme lexeme = new Lexeme(((Button) view).getText().toString(), 0, LexemeType.UNDEFINED);
                 lexemesToPrint.add(lexeme);
-                editText.addLexemes(lexemesToPrint);
+                currentEdit.addLexemes(lexemesToPrint);
                 lexemesToPrint.clear();
                 break;
             }
-            case R.id.btnPi:  {
-                Lexeme lexeme = new Lexeme( "π", 0, LexemeType.FUNCTION);
+            case R.id.btnPi: {
+                if (currentEdit == null)
+                    break;
+
+                Lexeme lexeme = new Lexeme("π", 0, LexemeType.UNDEFINED);
                 lexemesToPrint.add(lexeme);
-                editText.addLexemes(lexemesToPrint);
+                currentEdit.addLexemes(lexemesToPrint);
                 lexemesToPrint.clear();
                 break;
             }
-            case R.id.btnE:  {
-                Lexeme lexeme = new Lexeme( "e", 0, LexemeType.FUNCTION);
+            case R.id.btnE: {
+                if (currentEdit == null)
+                    break;
+
+                Lexeme lexeme = new Lexeme("e", 0, LexemeType.UNDEFINED);
                 lexemesToPrint.add(lexeme);
-                editText.addLexemes(lexemesToPrint);
+                currentEdit.addLexemes(lexemesToPrint);
                 lexemesToPrint.clear();
                 break;
             }
 
-            case R.id.btnInf:  {
-                Lexeme lexeme = new Lexeme( "∞", 0, LexemeType.FUNCTION);
+            case R.id.btnInf: {
+                if (currentEdit == null)
+                    break;
+
+                Lexeme lexeme = new Lexeme("∞", 0, LexemeType.UNDEFINED);
                 lexemesToPrint.add(lexeme);
-                editText.addLexemes(lexemesToPrint);
+                currentEdit.addLexemes(lexemesToPrint);
                 lexemesToPrint.clear();
                 break;
             }
 
             case R.id.btnClear:
-                editText.clear();
+                if (currentEdit != null)
+                    currentEdit.clear();
                 break;
 
             case R.id.btnEqual:
-                String exprStr = editText.getText().toString();
-
-                if( exprStr.length() == 0){
-                    break;
-                }
-
-                ExpressionBuilder expressionBuilder = new ExpressionBuilder();
-                Node root = expressionBuilder.buildTree(exprStr);
-                XVarCalculator calculator = new XVarCalculator();
-                double result = calculator.calculateNoArg(root);
-                outView.setText(String.valueOf(result).replaceAll("Infinity","∞"));
-
+                onEqual();
                 break;
 
             case R.id.btnLArrow:
-                editText.setSelection(editText.getSelectionStart()-1);
+                if (currentEdit != null)
+                    currentEdit.setSelection(currentEdit.getSelectionStart() - 1);
                 break;
 
             case R.id.btnRArrow:
-                editText.setSelection(editText.getSelectionStart()+1);
+                if (currentEdit != null)
+                    currentEdit.setSelection(currentEdit.getSelectionStart() + 1);
                 break;
             case R.id.btnBackspace:
-                editText.backspace();
+                if (currentEdit != null)
+                    currentEdit.backspace();
                 break;
+
+
         }
 
     }
 
+    protected abstract void onEqual();
+
+    public boolean onTouch(android.view.View view, android.view.MotionEvent motionEvent) {
+        int id = view.getId();
+        if (id == R.id.firstExprEditText ||
+                id == R.id.secondExprEditText ||
+                id == R.id.integrationEditTextUp ||
+                id == R.id.integrationEditTextDown ||
+                id == R.id.tEditTextFrom ||
+                id == R.id.tEditTextTo) {
+
+            currentEdit = (ExpressionEditText) view;
+            currentEdit.onTouchEvent(motionEvent);
+
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(currentEdit.getWindowToken(), 0);
+            return true;
+        }
+        return false;
+    }
 }

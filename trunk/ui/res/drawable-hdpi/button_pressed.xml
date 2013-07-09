@@ -3,18 +3,19 @@
     <item>
         <shape>
             <stroke android:color="#000000" android:width="0.5dp"/>
-            <gradient android:type="linear" android:startColor="#404050" android:centerColor="#252535" android:endColor="#252535" android:angle="90"/>
-            <corners android:radius="3dp" />
+            <gradient android:type="linear" android:startColor="#404050" android:centerColor="#252535"
+                      android:endColor="#252535" android:angle="90"/>
+            <corners android:radius="3dp"/>
         </shape>
     </item>
-
 
 
     <item android:bottom="4dp" android:top="4dp" android:left="3dp" android:right="3dp">
         <shape>
 
-            <gradient android:type="linear" android:startColor="#303040" android:centerColor="#454555" android:endColor="#454555" android:angle="-90"/>
-            <corners android:radius="1dp" />
+            <gradient android:type="linear" android:startColor="#303040" android:centerColor="#454555"
+                      android:endColor="#454555" android:angle="-90"/>
+            <corners android:radius="1dp"/>
         </shape>
     </item>
 

@@ -1,7 +1,6 @@
 package by.bsu.mg.math.computing.calculators;
 
-import by.bsu.mg.math.computing.Borders;
-import by.bsu.mg.math.computing.MathExtended;
+import by.bsu.mg.math.utils.Borders;
 import by.bsu.mg.math.parsing.lexemes.IError;
 import by.bsu.mg.math.parsing.lexemes.LexemeType;
 import by.bsu.mg.math.utils.IPoint;
@@ -11,25 +10,30 @@ import java.util.*;
 /**
  * @author Vladimir Goshko vmgoshko@gmail.com
  */
-public class Calculator  {
-    protected final static int NO_ARG = 0;
-    protected static double step = 0.1;
+public class OneVarCalculator {
+    public final static int NO_ARG = 0;
+    protected double step = 0.5;
     protected List<IPoint> points = new LinkedList<>();
     protected Queue<IError> errors = new ArrayDeque<>();
     protected Map<String, Double> vars = new HashMap<>();
     protected Map<String, Borders> borders;
+    protected int width;
 
-    public Calculator()
-    {
+    public OneVarCalculator() {
 
     }
 
-    public Calculator(Map<String, Borders> borders) {
+    public OneVarCalculator(Map<String, Borders> borders) {
         this.borders = borders;
+        createVars(borders);
+    }
+
+    protected void createVars(Map<String, Borders> borders) {
+        vars.clear();
         Set<String> keys = borders.keySet();
 
         for (String key : keys) {
-            vars.put(key,borders.get(key).BEGIN);
+            vars.put(key, borders.get(key).BEGIN);
         }
     }
 
@@ -136,6 +140,7 @@ public class Calculator  {
                     return Math.log(rarg) / Math.log(larg);
                 }
 
+                //For max min with two args
                 double[] childrenValues = {larg, rarg};
                 return calculateManyArgOperation(name, type, childrenValues);
 
@@ -159,5 +164,9 @@ public class Calculator  {
                 break;
         }
         return 0;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
     }
 }

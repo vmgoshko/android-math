@@ -3,11 +3,7 @@ package by.bsu.mg.math.matrices;
 import by.bsu.mg.math.exceptions.matrices.IllegalMatrixSizeException;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Denis
- * Date: 28.10.12
- * Time: 20:25
- * To change this template use File | Settings | File Templates.
+ * @author Vladimir Goshko vmgoshko@gmail.com
  */
 public class Matrix {
     private double elements[][];

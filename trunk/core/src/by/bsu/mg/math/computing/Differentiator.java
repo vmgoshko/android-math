@@ -2,10 +2,10 @@ package by.bsu.mg.math.computing;
 
 import by.bsu.mg.math.exceptions.expressions.EmptyExpressionTreeException;
 import by.bsu.mg.math.parsing.expressions.nodes.DoubleNode;
+import by.bsu.mg.math.parsing.expressions.nodes.Node;
 import by.bsu.mg.math.parsing.expressions.nodes.StringNode;
 import by.bsu.mg.math.parsing.lexemes.Lexeme;
 import by.bsu.mg.math.parsing.lexemes.LexemeType;
-import by.bsu.mg.math.parsing.expressions.nodes.Node;
 
 /**
  * @author Vladimir Goshko vmgoshko@gmail.com
@@ -15,7 +15,7 @@ public class Differentiator {
     public Node differentiate(Node expr) throws EmptyExpressionTreeException {
         Lexeme lexeme;
 
-        if(expr != null){
+        if (expr != null) {
             throw new EmptyExpressionTreeException();
         }
 
@@ -50,7 +50,7 @@ public class Differentiator {
         Node root;
         Node leftMultArg = null;
         Node rightMultArg = null;
-        StringNode currNode = (StringNode)expr;
+        StringNode currNode = (StringNode) expr;
 
         root = new StringNode(new Lexeme("*", 0, LexemeType.BINARY_MULTIPLY));
 
@@ -78,10 +78,10 @@ public class Differentiator {
             Node den_left = new StringNode(new Lexeme("cos", 0, LexemeType.FUNCTION));
             Node den_right = new StringNode(new Lexeme("2", 0, LexemeType.NUMBER));
 
-            den_left.setChild(0,expr.getChild(0));
+            den_left.setChild(0, expr.getChild(0));
 
-            den.setChild(0,den_left);
-            den.setChild(1,den_right);
+            den.setChild(0, den_left);
+            den.setChild(1, den_right);
 
             leftMultArg.setChild(0, num);
             leftMultArg.setChild(1, den);
@@ -97,15 +97,15 @@ public class Differentiator {
             Node den_left = new StringNode(new Lexeme("sin", 0, LexemeType.FUNCTION));
             Node den_right = new StringNode(new Lexeme("2", 0, LexemeType.NUMBER));
 
-            den_left.setChild(0,expr.getChild(0));
+            den_left.setChild(0, expr.getChild(0));
 
-            den.setChild(0,den_left);
-            den.setChild(1,den_right);
+            den.setChild(0, den_left);
+            den.setChild(1, den_right);
 
             divide.setChild(0, num);
             divide.setChild(1, den);
 
-            leftMultArg.setChild(0,divide);
+            leftMultArg.setChild(0, divide);
 
             rightMultArg = differentiate(expr.getChild(0));
         }
@@ -118,14 +118,14 @@ public class Differentiator {
             Node den_right = new StringNode(new Lexeme("0.5", 0, LexemeType.NUMBER));
 
             Node pow = new StringNode(new Lexeme("^", 0, LexemeType.BINARY_POWER));
-            pow.setChild(0,expr.getChild(0));
-            pow.setChild(1,new StringNode(new Lexeme("2", 0, LexemeType.NUMBER)));
+            pow.setChild(0, expr.getChild(0));
+            pow.setChild(1, new StringNode(new Lexeme("2", 0, LexemeType.NUMBER)));
 
-            den_left.setChild(0,new StringNode(new Lexeme("1", 0, LexemeType.NUMBER)));
-            den_left.setChild(1,pow);
+            den_left.setChild(0, new StringNode(new Lexeme("1", 0, LexemeType.NUMBER)));
+            den_left.setChild(1, pow);
 
-            den.setChild(0,den_left);
-            den.setChild(1,den_right);
+            den.setChild(0, den_left);
+            den.setChild(1, den_right);
 
             leftMultArg.setChild(0, num);
             leftMultArg.setChild(1, den);
@@ -142,19 +142,19 @@ public class Differentiator {
             Node den_right = new StringNode(new Lexeme("0.5", 0, LexemeType.NUMBER));
 
             Node pow = new StringNode(new Lexeme("^", 0, LexemeType.BINARY_POWER));
-            pow.setChild(0,expr.getChild(0));
-            pow.setChild(1,new StringNode(new Lexeme("2", 0, LexemeType.NUMBER)));
+            pow.setChild(0, expr.getChild(0));
+            pow.setChild(1, new StringNode(new Lexeme("2", 0, LexemeType.NUMBER)));
 
-            den_left.setChild(0,new StringNode(new Lexeme("1", 0, LexemeType.NUMBER)));
-            den_left.setChild(1,pow);
+            den_left.setChild(0, new StringNode(new Lexeme("1", 0, LexemeType.NUMBER)));
+            den_left.setChild(1, pow);
 
-            den.setChild(0,den_left);
-            den.setChild(1,den_right);
+            den.setChild(0, den_left);
+            den.setChild(1, den_right);
 
             ratio.setChild(0, num);
             ratio.setChild(1, den);
 
-            leftMultArg.setChild(0,ratio);
+            leftMultArg.setChild(0, ratio);
 
             rightMultArg = differentiate(expr.getChild(0));
         }
@@ -165,14 +165,14 @@ public class Differentiator {
             Node den = new StringNode(new Lexeme("+", 0, LexemeType.BINARY_PLUS));
             Node den_left = new StringNode(new Lexeme("1", 0, LexemeType.NUMBER));
             Node den_right = new StringNode(new Lexeme("^", 0, LexemeType.BINARY_POWER));
-            den_right.setChild(0,expr.getChild(0));
-            den_right.setChild(1,new StringNode(new Lexeme("2", 0, LexemeType.NUMBER)));
+            den_right.setChild(0, expr.getChild(0));
+            den_right.setChild(1, new StringNode(new Lexeme("2", 0, LexemeType.NUMBER)));
 
-            den.setChild(0,den_left);
-            den.setChild(1,den_right);
+            den.setChild(0, den_left);
+            den.setChild(1, den_right);
 
-            leftMultArg.setChild(0,num);
-            leftMultArg.setChild(1,den);
+            leftMultArg.setChild(0, num);
+            leftMultArg.setChild(1, den);
 
             rightMultArg = differentiate(expr.getChild(0));
         }
@@ -184,65 +184,65 @@ public class Differentiator {
             Node den = new StringNode(new Lexeme("+", 0, LexemeType.BINARY_PLUS));
             Node den_left = new StringNode(new Lexeme("1", 0, LexemeType.NUMBER));
             Node den_right = new StringNode(new Lexeme("^", 0, LexemeType.BINARY_POWER));
-            den_right.setChild(0,expr.getChild(0));
-            den_right.setChild(1,new StringNode(new Lexeme("2", 0, LexemeType.NUMBER)));
+            den_right.setChild(0, expr.getChild(0));
+            den_right.setChild(1, new StringNode(new Lexeme("2", 0, LexemeType.NUMBER)));
 
-            den.setChild(0,den_left);
-            den.setChild(1,den_right);
+            den.setChild(0, den_left);
+            den.setChild(1, den_right);
 
-            ratio.setChild(0,num);
-            ratio.setChild(1,den);
+            ratio.setChild(0, num);
+            ratio.setChild(1, den);
 
-            leftMultArg.setChild(0,ratio);
+            leftMultArg.setChild(0, ratio);
 
             rightMultArg = differentiate(expr.getChild(0));
         }
 
         if ("ln".equals(currNode.getValue())) {
             leftMultArg = new StringNode(new Lexeme("/", 0, LexemeType.BINARY_DIVIDE));
-            leftMultArg.setChild(0, new StringNode( new Lexeme("1", 0, LexemeType.NUMBER)));
+            leftMultArg.setChild(0, new StringNode(new Lexeme("1", 0, LexemeType.NUMBER)));
             leftMultArg.setChild(1, expr.getChild(0));
             rightMultArg = differentiate(expr.getChild(0));
         }
 
         if ("lg".equals(currNode.getValue())) {
             leftMultArg = new StringNode(new Lexeme("/", 0, LexemeType.BINARY_DIVIDE));
-            Node den = new StringNode(new Lexeme("*",0,LexemeType.BINARY_MULTIPLY));
-            Node ln = new StringNode(new Lexeme("ln",0,LexemeType.FUNCTION));
-            ln.setChild(0,new StringNode(new Lexeme("10",0,LexemeType.NUMBER)));
+            Node den = new StringNode(new Lexeme("*", 0, LexemeType.BINARY_MULTIPLY));
+            Node ln = new StringNode(new Lexeme("ln", 0, LexemeType.FUNCTION));
+            ln.setChild(0, new StringNode(new Lexeme("10", 0, LexemeType.NUMBER)));
 
-            den.setChild(0,expr.getChild(0));
-            den.setChild(1,ln);
+            den.setChild(0, expr.getChild(0));
+            den.setChild(1, ln);
 
-            leftMultArg.setChild(0, new StringNode( new Lexeme("1", 0, LexemeType.NUMBER)));
+            leftMultArg.setChild(0, new StringNode(new Lexeme("1", 0, LexemeType.NUMBER)));
             leftMultArg.setChild(1, den);
             rightMultArg = differentiate(expr.getChild(0));
         }
 
         if ("log2".equals(currNode.getValue())) {
             leftMultArg = new StringNode(new Lexeme("/", 0, LexemeType.BINARY_DIVIDE));
-            Node den = new StringNode(new Lexeme("*",0,LexemeType.BINARY_MULTIPLY));
-            Node ln = new StringNode(new Lexeme("ln",0,LexemeType.FUNCTION));
-            ln.setChild(0,new StringNode(new Lexeme("2",0,LexemeType.NUMBER)));
+            Node den = new StringNode(new Lexeme("*", 0, LexemeType.BINARY_MULTIPLY));
+            Node ln = new StringNode(new Lexeme("ln", 0, LexemeType.FUNCTION));
+            ln.setChild(0, new StringNode(new Lexeme("2", 0, LexemeType.NUMBER)));
 
-            den.setChild(0,expr.getChild(0));
-            den.setChild(1,ln);
+            den.setChild(0, expr.getChild(0));
+            den.setChild(1, ln);
 
-            leftMultArg.setChild(0, new StringNode( new Lexeme("1", 0, LexemeType.NUMBER)));
+            leftMultArg.setChild(0, new StringNode(new Lexeme("1", 0, LexemeType.NUMBER)));
             leftMultArg.setChild(1, den);
             rightMultArg = differentiate(expr.getChild(0));
         }
 
         if ("logd".equals(currNode.getValue())) {
             leftMultArg = new StringNode(new Lexeme("/", 0, LexemeType.BINARY_DIVIDE));
-            Node den = new StringNode(new Lexeme("*",0,LexemeType.BINARY_MULTIPLY));
-            Node ln = new StringNode(new Lexeme("ln",0,LexemeType.FUNCTION));
-            ln.setChild(0,new StringNode(new Lexeme( ((DoubleNode)expr.getChild(1)).getValue().toString(), 0, LexemeType.NUMBER)));
+            Node den = new StringNode(new Lexeme("*", 0, LexemeType.BINARY_MULTIPLY));
+            Node ln = new StringNode(new Lexeme("ln", 0, LexemeType.FUNCTION));
+            ln.setChild(0, new StringNode(new Lexeme(((DoubleNode) expr.getChild(1)).getValue().toString(), 0, LexemeType.NUMBER)));
 
-            den.setChild(0,expr.getChild(0));
-            den.setChild(1,ln);
+            den.setChild(0, expr.getChild(0));
+            den.setChild(1, ln);
 
-            leftMultArg.setChild(0, new StringNode( new Lexeme("1", 0, LexemeType.NUMBER)));
+            leftMultArg.setChild(0, new StringNode(new Lexeme("1", 0, LexemeType.NUMBER)));
             leftMultArg.setChild(1, den);
             rightMultArg = differentiate(expr.getChild(0));
         }
@@ -268,43 +268,43 @@ public class Differentiator {
     }
 
     private Node diffPow(Node expr) {
-        Node root = new StringNode( new Lexeme("*",0,LexemeType.BINARY_MULTIPLY));
-        Node leftMultArg = new StringNode( new Lexeme("^",0,LexemeType.BINARY_POWER));
+        Node root = new StringNode(new Lexeme("*", 0, LexemeType.BINARY_MULTIPLY));
+        Node leftMultArg = new StringNode(new Lexeme("^", 0, LexemeType.BINARY_POWER));
 
-        Node leftPowerArg = new DoubleNode( new Lexeme(String.valueOf(Math.exp(1)),0,LexemeType.NUMBER));
+        Node leftPowerArg = new DoubleNode(new Lexeme(String.valueOf(Math.exp(1)), 0, LexemeType.NUMBER));
 
-        Node rightPowerArg =  new StringNode( new Lexeme("*",0,LexemeType.BINARY_MULTIPLY));
-        Node leftPowerMultArg = new StringNode( new Lexeme("ln",0,LexemeType.FUNCTION));
-        leftPowerMultArg.setChild(0,expr.getChild(0));
-        rightPowerArg.setChild(0,leftPowerMultArg);
-        rightPowerArg.setChild(1,expr.getChild(1));
+        Node rightPowerArg = new StringNode(new Lexeme("*", 0, LexemeType.BINARY_MULTIPLY));
+        Node leftPowerMultArg = new StringNode(new Lexeme("ln", 0, LexemeType.FUNCTION));
+        leftPowerMultArg.setChild(0, expr.getChild(0));
+        rightPowerArg.setChild(0, leftPowerMultArg);
+        rightPowerArg.setChild(1, expr.getChild(1));
 
-        leftMultArg.setChild(0,leftPowerArg);
-        leftMultArg.setChild(1,rightPowerArg);
+        leftMultArg.setChild(0, leftPowerArg);
+        leftMultArg.setChild(1, rightPowerArg);
 
-        Node rightMultArg = new StringNode( new Lexeme("+",0,LexemeType.BINARY_PLUS));
+        Node rightMultArg = new StringNode(new Lexeme("+", 0, LexemeType.BINARY_PLUS));
 
-        Node leftPlusArg =  new StringNode( new Lexeme("*",0,LexemeType.BINARY_MULTIPLY));
-        Node leftPlusLeftArg = new StringNode( new Lexeme("/",0,LexemeType.BINARY_DIVIDE));
-        leftPlusLeftArg.setChild(0,differentiate(expr.getChild(0)));
-        leftPlusLeftArg.setChild(1,expr.getChild(0));
-        leftPlusArg.setChild(0,leftPlusLeftArg);
+        Node leftPlusArg = new StringNode(new Lexeme("*", 0, LexemeType.BINARY_MULTIPLY));
+        Node leftPlusLeftArg = new StringNode(new Lexeme("/", 0, LexemeType.BINARY_DIVIDE));
+        leftPlusLeftArg.setChild(0, differentiate(expr.getChild(0)));
+        leftPlusLeftArg.setChild(1, expr.getChild(0));
+        leftPlusArg.setChild(0, leftPlusLeftArg);
 
-        leftPlusArg.setChild(1,expr.getChild(1));
+        leftPlusArg.setChild(1, expr.getChild(1));
 
-        Node rightPlusArg =  new StringNode( new Lexeme("*",0,LexemeType.BINARY_MULTIPLY));
+        Node rightPlusArg = new StringNode(new Lexeme("*", 0, LexemeType.BINARY_MULTIPLY));
 
-        Node rightPlusRightArg = new StringNode(new Lexeme("ln",0,LexemeType.FUNCTION));
-        rightPlusRightArg.setChild(0,expr.getChild(0));
+        Node rightPlusRightArg = new StringNode(new Lexeme("ln", 0, LexemeType.FUNCTION));
+        rightPlusRightArg.setChild(0, expr.getChild(0));
 
-        rightPlusArg.setChild(0,differentiate(expr.getChild(0)));
-        rightPlusArg.setChild(1,rightPlusRightArg);
+        rightPlusArg.setChild(0, differentiate(expr.getChild(0)));
+        rightPlusArg.setChild(1, rightPlusRightArg);
 
-        rightMultArg.setChild(0,leftPlusArg);
-        rightMultArg.setChild(1,rightPlusArg);
+        rightMultArg.setChild(0, leftPlusArg);
+        rightMultArg.setChild(1, rightPlusArg);
 
-        root.setChild(0,leftMultArg);
-        root.setChild(1,rightMultArg);
+        root.setChild(0, leftMultArg);
+        root.setChild(1, rightMultArg);
         return root;
     }
 

@@ -59,8 +59,9 @@ public class LexemeListValidator {
                         (rightType == LexemeType.BINARY_MOD) ||
                         (rightType == LexemeType.BINARY_POWER) ||
                         (rightType == LexemeType.CLOSE_BRACKET) ||
-                        (rightType == LexemeType.UNARY_FACTORIAL);
-                //(rightType == LexemeType.SEPARATOR) ||
+                        (rightType == LexemeType.UNARY_FACTORIAL) ||
+                        (rightType == LexemeType.SEPARATOR);
+
                 if (!valideNeighbour) {
                     errors.add(new LexemeNeighbourError(leftLexeme, rightLexeme));
                 }

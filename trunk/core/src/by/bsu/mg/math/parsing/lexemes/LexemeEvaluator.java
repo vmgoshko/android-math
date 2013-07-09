@@ -36,9 +36,9 @@ public class LexemeEvaluator {
     private static String[] binaryOperations = {"+", "-", "*", "/", "^", "%"};
 
     private static String[] functionOperations = {"sin", "cos", "tg", "ctg", "arsin", "arcos",
-                                                  "artg", "arctg", "ln", "lg", "log2", "logd",
-                                                  "todeg", "torad", "abs", "floor", "ceil","sign",
-                                                  "sh", "ch", "th", "cth", "max", "min"};
+            "artg", "arctg", "ln", "lg", "log2", "logd",
+            "todeg", "torad", "abs", "floor", "ceil", "sign",
+            "sh", "ch", "th", "cth", "max", "min"};
 
     private static String[] variables = {"x", "y", "z", "t"};
     private static String[] constants = {"π", "e", "∞"};
@@ -54,6 +54,7 @@ public class LexemeEvaluator {
         sortLexemeArrays();
         bracketLevel = 0;
     }
+
     private static class StringComparator implements Comparator<String> {
 
         @Override
@@ -93,8 +94,8 @@ public class LexemeEvaluator {
         return maxLevel;
     }
 
-    public static LexemeType evaluateLexeme(Lexeme lexeme){
-         //TODO: optimize one lexeme evaluation
+    public static LexemeType evaluateLexeme(Lexeme lexeme) {
+        //TODO: optimize one lexeme evaluation
         lexemes = new ArrayList<Lexeme>();
         lexemes.add(lexeme);
 
@@ -143,7 +144,7 @@ public class LexemeEvaluator {
             return result;
         }
 
-        if (isConstant(lexeme.getValue())){
+        if (isConstant(lexeme.getValue())) {
             result = LexemeType.NUMBER;
             replaceConstant(lexeme);
             return result;
@@ -152,17 +153,17 @@ public class LexemeEvaluator {
     }
 
     private static void replaceConstant(Lexeme lexeme) {
-        if("π".equals(lexeme.getValue())){
+        if ("π".equals(lexeme.getValue())) {
             lexeme.setValue(String.valueOf(Math.PI));
             return;
         }
 
-        if("∞".equals(lexeme.getValue())){
+        if ("∞".equals(lexeme.getValue())) {
             lexeme.setValue(String.valueOf(Double.POSITIVE_INFINITY));
             return;
         }
 
-        if("e".equals(lexeme.getValue())){
+        if ("e".equals(lexeme.getValue())) {
             lexeme.setValue(String.valueOf(Math.E));
             return;
         }
@@ -180,8 +181,8 @@ public class LexemeEvaluator {
 
         int lexemeValueIndex = Arrays.binarySearch(functionOperations, lexeme.getValue(), new StringComparator());
 
-        if(lexemeValueIndex >= 0){
-           return LexemeType.FUNCTION;
+        if (lexemeValueIndex >= 0) {
+            return LexemeType.FUNCTION;
         }
 
         return LexemeType.UNDEFINED;
@@ -251,7 +252,7 @@ public class LexemeEvaluator {
         Lexeme preMinusLexeme = lexemes.get(index - 1);
 
         LexemeType definedType;
-        if(preMinusLexeme.getType() == LexemeType.OPEN_BRACKET){
+        if (preMinusLexeme.getType() == LexemeType.OPEN_BRACKET) {
             definedType = LexemeType.UNARY_MINUS;
         } else {
             definedType = LexemeType.BINARY_MINUS;
@@ -259,7 +260,6 @@ public class LexemeEvaluator {
 
         return definedType;
     }
-
 
 
     private static boolean isNumber(String str) {
@@ -285,7 +285,7 @@ public class LexemeEvaluator {
 
     public static boolean isBinary(LexemeType type) {
         return (type == LexemeType.BINARY_DIVIDE) ||
-               (type == LexemeType.BINARY_MOD) ||
+                (type == LexemeType.BINARY_MOD) ||
                 (type == LexemeType.BINARY_PLUS) ||
                 (type == LexemeType.BINARY_MINUS) ||
                 (type == LexemeType.BINARY_MULTIPLY) ||
